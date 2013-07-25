@@ -1,2 +1,0 @@
-cordova-plugin-lowlatencyaudio
-==============================
