@@ -1,6 +1,5 @@
 //
-//  PGAudio.h
-//  PGAudio
+//  CDVAudio.h
 //
 //  Created by Andrew Trice on 1/19/12.
 //
@@ -17,22 +16,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CORDOVA/CDVPlugin.h>
+#import <Cordova/CDVPlugin.h>
 #import <AVFoundation/AVAudioPlayer.h>
-#import "LowLatencyAudioAsset.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "LowLatencyAudioAsset.h"
 
 @interface LowLatencyAudio : CDVPlugin {
     NSMutableDictionary* audioMapping; 
 }
 
-//Public Instance Methods (visible in phonegap API)
-- (void) preloadFX:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) preloadAudio:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) play:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) stop:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) loop:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) unload:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+//Public Instance Methods (visible in Cordova API)
+- (void) preloadFX:(CDVInvokedUrlCommand *)command;
+- (void) preloadAudio:(CDVInvokedUrlCommand *)command;
+- (void) play:(CDVInvokedUrlCommand *)command;
+- (void) stop:(CDVInvokedUrlCommand *)command;
+- (void) loop:(CDVInvokedUrlCommand *)command;
+- (void) unload:(CDVInvokedUrlCommand *)command;
 
 
 //Instance Methods  

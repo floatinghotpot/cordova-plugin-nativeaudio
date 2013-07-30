@@ -11,7 +11,7 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.phonegap;
+package org.apache.cordova.plugin;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
-public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListener {
+public class PolyphonicVoice implements OnPreparedListener, OnCompletionListener {
 
 	private static final int INVALID = 0;
 	private static final int PREPARED = 1;

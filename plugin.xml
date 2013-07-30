@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="org.apache.cordova.plugin.lowlatencyaudio"
+      version="0.1.0">
+    <name>PayPalMPL</name>
+
+    <js-module src="www/PayPalMPL.js" name="PayPalMPL">
+        <clobbers target="window.LowLatencyAudio" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PayPalMPL">
+                <param name="android-package" value="org.apache.cordova.plugin.LowLatencyAudio"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+          </config-file>
+
+        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/org/apache/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/org/apache/cordova/plugin" />
+        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/org/apache/cordova/plugin" />
+        
+     </platform>
+     
+     <!-- ios -->
+     <platform name="ios">    
+         <config-file target="config.xml" parent="/*">
+             <feature name="LowLatencyAudio">
+                 <param name="ios-package" value="LowLatencyAudio" />
+             </feature>
+         </config-file>
+         
+         <header-file src="src/ios/LowLatencyAudio.h" />
+         <source-file src="src/ios/LowLatencyAudio.m" />
+         <header-file src="src/ios/LowLatencyAudioAsset.h" />
+         <source-file src="src/ios/LowLatencyAudioAsset.m" />
+         
+	</platform>
+          
+</plugin>

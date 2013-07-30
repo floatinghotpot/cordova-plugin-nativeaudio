@@ -11,19 +11,19 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.phonegap;
+package org.apache.cordova.plugin;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.res.AssetFileDescriptor;
 
-public class PGLowLatencyAudioAsset {
+public class LowLatencyAudioAsset {
 
 	private ArrayList<PGPolyphonicVoice> voices;
 	private int playIndex = 0;
 	
-	public PGLowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices) throws IOException
+	public LowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices) throws IOException
 	{
 		voices = new ArrayList<PGPolyphonicVoice>();
 		
