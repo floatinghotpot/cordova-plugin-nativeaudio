@@ -1,4 +1,4 @@
-PGLowLatencyAudio plugin for PhoneGap/Apache Cordova
+LowLatencyAudio plugin for PhoneGap/Apache Cordova
 Developed by Andrew Trice - http://tricedesigns.com
 
 THIS SOFTWARE IS PROVIDED BY ANDREW TRICE "AS IS" AND ANY EXPRESS OR
@@ -19,15 +19,15 @@ The low latency audio plugin is designed to enable low latency and polyphonic au
 
 Getting started:
 Add the following files to your JAVA project, keeping the folder structure:
-com/phonegap/PGLowLatencyAudio.java
-com/phonegap/PGLowLatencyAudioAsset.java
-com/phonegap/PGPolyphonicVoice.java
+LowLatencyAudio.java
+LowLatencyAudioAsset.java
+PolyphonicVoice.java
 
 Add the following file to your www directory, and add to index.html:
-PGLowLatencyAudio.js
+LowLatencyAudio.js
 
 Add the following to your phonegap plugins.xml file:
-<plugin name="PGLowLatencyAudio" value="com.phonegap.PGLowLatencyAudio" />
+<plugin name="LowLatencyAudio" value="org.apache.cordova.plugin.LowLatencyAudio" />
 
 Usage:
 1) Preload the audio asset

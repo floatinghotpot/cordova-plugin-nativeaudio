@@ -4,7 +4,14 @@ cordova-plugin-lowlatencyaudio
 ---------------------------
 This is the LowLatencyAudio Cordova Plugin for Android and iOS.  
 
-This plugin was updated for Cordova 3.0.0, and tested on Anroid and iOS.
+The low latency audio plugin is designed to enable low latency and polyphonic audio from PhoneGap applications, using a very simple and basic API.
+
+It was developed by Andrew Trice - http://tricedesigns.com.
+
+You can read more about this plugin at:
+http://www.tricedesigns.com/2012/01/25/low-latency-polyphonic-audio-in-phonegap/
+
+Now it's ported to Cordova 3.0.0, and tested on Anroid and iOS.
 
 # How to use? #
 ---------------------------
