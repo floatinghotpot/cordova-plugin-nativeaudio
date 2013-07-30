@@ -5,14 +5,14 @@
       version="0.1.0">
     <name>PayPalMPL</name>
 
-    <js-module src="www/PayPalMPL.js" name="PayPalMPL">
-        <clobbers target="window.LowLatencyAudio" />
+    <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
+        <clobbers target="window.plugins.LowLatencyAudio" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="PayPalMPL">
+            <feature name="LowLatencyAudio">
                 <param name="android-package" value="org.apache.cordova.plugin.LowLatencyAudio"/>
             </feature>
         </config-file>
