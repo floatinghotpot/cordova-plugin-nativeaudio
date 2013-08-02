@@ -13,10 +13,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package org.apache.cordova.plugin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
@@ -45,124 +49,165 @@ public class LowLatencyAudio extends CordovaPlugin {
 	public static final String UNLOAD="unload";
 	
 	public static final int DEFAULT_POLYPHONY_VOICES = 15;
-
+	
+	private static final String LOGTAG = "LowLatencyAudio";
+	
 	private static SoundPool soundPool;
 	private static HashMap<String, LowLatencyAudioAsset> assetMap; 
 	private static HashMap<String, Integer> soundMap; 
 	private static HashMap<String, ArrayList<Integer>> streamMap; 
 	
 	private PluginResult executePreloadFX(JSONArray data) {
-		String audioID = data.getString(0);
-		if (!soundMap.containsKey(audioID)) {
-			String assetPath = data.getString(1);
-			String fullPath = "www/".concat(assetPath);
+		String audioID;
+		try {
+			audioID = data.getString(0);
+			if (!soundMap.containsKey(audioID)) {
+				String assetPath = data.getString(1);
+				String fullPath = "www/".concat(assetPath);
 
-			AssetManager am = ctx.getResources().getAssets();
-			AssetFileDescriptor afd = am.openFd(fullPath);
-			int assetIntID = soundPool.load(afd, 1);
-			soundMap.put(audioID, assetIntID);
-		} else {
-			return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
+				Context ctx = cordova.getActivity().getApplicationContext();
+				AssetManager am = ctx.getResources().getAssets();
+				AssetFileDescriptor afd = am.openFd(fullPath);
+				int assetIntID = soundPool.load(afd, 1);
+				soundMap.put(audioID, assetIntID);
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
+			}
+		} catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		} catch (IOException e) {
+			return new PluginResult(Status.ERROR, e.toString());
 		}
+
 		return new PluginResult(Status.OK);
 	}
 	
 	private PluginResult executePreloadAudio(JSONArray data) {
-		String audioID = data.getString(0);
-		if (!assetMap.containsKey(audioID)) {
-			String assetPath = data.getString(1);
-			int voices;
-			if (data.length() < 2) {
-				voices = 0;
+		String audioID;
+		try {
+			audioID = data.getString(0);
+			if (!assetMap.containsKey(audioID)) {
+				String assetPath = data.getString(1);
+				int voices;
+				if (data.length() < 2) {
+					voices = 0;
+				} else {
+					voices = data.getInt(2);
+				}
+
+				String fullPath = "www/".concat(assetPath);
+
+				Context ctx = cordova.getActivity().getApplicationContext();
+				AssetManager am = ctx.getResources().getAssets();
+				AssetFileDescriptor afd = am.openFd(fullPath);
+
+				LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
+						afd, voices);
+				assetMap.put(audioID, asset);
+
+				return new PluginResult(Status.OK);
 			} else {
-				voices = data.getInt(2);
+				return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
 			}
-
-			String fullPath = "www/".concat(assetPath);
-
-			AssetManager am = ctx.getResources().getAssets();
-			AssetFileDescriptor afd = am.openFd(fullPath);
-
-			PGLowLatencyAudioAsset asset = new PGLowLatencyAudioAsset(
-					afd, voices);
-			assetMap.put(audioID, asset);
-
-			return new PluginResult(Status.OK);
-		} else {
-			return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
+		} catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		} catch (IOException e) {
+			return new PluginResult(Status.ERROR, e.toString());
 		}		
 	}
 	
-	private PluginResult executePlayOrLoop(JSONArray data) {
-		String audioID = data.getString(0);
-		if (assetMap.containsKey(audioID)) {
-			PGLowLatencyAudioAsset asset = assetMap.get(audioID);
-			if (LOOP.equals(action))
-				asset.loop();
-			else
-				asset.play();
-		} else if (soundMap.containsKey(audioID)) {
-			int loops = 0;
-			if (LOOP.equals(action)) {
-				loops = -1;
+	private PluginResult executePlayOrLoop(String action, JSONArray data) {
+		String audioID;
+		try {
+			audioID = data.getString(0);
+			if (assetMap.containsKey(audioID)) {
+				LowLatencyAudioAsset asset = assetMap.get(audioID);
+				if (LOOP.equals(action))
+					asset.loop();
+				else
+					asset.play();
+			} else if (soundMap.containsKey(audioID)) {
+				int loops = 0;
+				if (LOOP.equals(action)) {
+					loops = -1;
+				}
+
+				ArrayList<Integer> streams = streamMap.get(audioID);
+				if (streams == null)
+					streams = new ArrayList<Integer>();
+
+				int assetIntID = soundMap.get(audioID);
+				int streamID = soundPool
+						.play(assetIntID, 1, 1, 1, loops, 1);
+				streams.add(streamID);
+				streamMap.put(audioID, streams);
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 			}
-
-			ArrayList<Integer> streams = streamMap.get(audioID);
-			if (streams == null)
-				streams = new ArrayList<Integer>();
-
-			int assetIntID = soundMap.get(audioID);
-			int streamID = soundPool
-					.play(assetIntID, 1, 1, 1, loops, 1);
-			streams.add(streamID);
-			streamMap.put(audioID, streams);
-		} else {
-			return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+		} catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		} catch (IOException e) {
+			return new PluginResult(Status.ERROR, e.toString());
 		}
 		
 		return new PluginResult(Status.OK);
 	}
 
 	private PluginResult executeStop(JSONArray data) {
-		String audioID = data.getString(0);
-		if (assetMap.containsKey(audioID)) {
-			PGLowLatencyAudioAsset asset = assetMap.get(audioID);
-			asset.stop();
-		} else if (soundMap.containsKey(audioID)) {
-			ArrayList<Integer> streams = streamMap.get(audioID);
-			if (streams != null) {
-				for (int x = 0; x < streams.size(); x++)
-					soundPool.stop(streams.get(x));
-			}
-			streamMap.remove(audioID);
-		} else {
-			return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+		String audioID;
+		try {
+			audioID = data.getString(0);
+			if (assetMap.containsKey(audioID)) {
+				LowLatencyAudioAsset asset = assetMap.get(audioID);
+				asset.stop();
+			} else if (soundMap.containsKey(audioID)) {
+				ArrayList<Integer> streams = streamMap.get(audioID);
+				if (streams != null) {
+					for (int x = 0; x < streams.size(); x++)
+						soundPool.stop(streams.get(x));
+				}
+				streamMap.remove(audioID);
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+			}			
+		} catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		} catch (IOException e) {
+			return new PluginResult(Status.ERROR, e.toString());
 		}
 		
 		return new PluginResult(Status.OK);
 	}
 
 	private PluginResult executeUnload(JSONArray data) {
-		String audioID = data.getString(0);
-		if (assetMap.containsKey(audioID)) {
-			PGLowLatencyAudioAsset asset = assetMap.get(audioID);
-			asset.unload();
-			assetMap.remove(audioID);
-		} else if (soundMap.containsKey(audioID)) {
-			// streams unloaded and stopped above
-			int assetIntID = soundMap.get(audioID);
-			soundMap.remove(audioID);
-			soundPool.unload(assetIntID);
-		} else {
-			result = new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+		String audioID;
+		try {
+			audioID = data.getString(0);
+			if (assetMap.containsKey(audioID)) {
+				LowLatencyAudioAsset asset = assetMap.get(audioID);
+				asset.unload();
+				assetMap.remove(audioID);
+			} else if (soundMap.containsKey(audioID)) {
+				// streams unloaded and stopped above
+				int assetIntID = soundMap.get(audioID);
+				soundMap.remove(audioID);
+				soundPool.unload(assetIntID);
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+			}
+		} catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		} catch (IOException e) {
+			return new PluginResult(Status.ERROR, e.toString());
 		}
 		
 		return new PluginResult(Status.OK);
 	}
 	
 	@Override
-	public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext)
-	{
+	public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
+		Log.d(LOGTAG, "Plugin Called: " + action);
+		
 		PluginResult result = null;
 		initSoundPool();
 		
@@ -170,28 +215,28 @@ public class LowLatencyAudio extends CordovaPlugin {
 			if (PRELOAD_FX.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePreloadFX(data) )
+		            	callbackContext.sendPluginResult( executePreloadFX(data) );
 		            }
 		        });				
 				
 			} else if (PRELOAD_AUDIO.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePreloadAudio(data) )
+		            	callbackContext.sendPluginResult( executePreloadAudio(data) );
 		            }
 		        });				
 
 			} else if (PLAY.equals(action) || LOOP.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePlayOrLoop(data) )
+		            	callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
 		            }
 		        });				
 				
 			} else if (STOP.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executeStop(data) )
+		            	callbackContext.sendPluginResult( executeStop(data) );
 		            }
 		        });				
 				
@@ -199,7 +244,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
 		        		executeStop(data);
-						callbackContext.sendPluginResult( executeUnload(data) )
+						callbackContext.sendPluginResult( executeUnload(data) );
 		            }
 		        });
 				
@@ -210,7 +255,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 			result = new PluginResult(Status.ERROR, ex.toString());
 		}
 
-		callbackContext.sendPluginResult( result )
+		if(result != null) callbackContext.sendPluginResult( result );
 		return true;
 	}
 
@@ -229,7 +274,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 		}
 
 		if (assetMap == null) {
-			assetMap = new HashMap<String, PGLowLatencyAudioAsset>();
+			assetMap = new HashMap<String, LowLatencyAudioAsset>();
 		}
 	}
 }

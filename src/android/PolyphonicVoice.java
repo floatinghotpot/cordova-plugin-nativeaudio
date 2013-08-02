@@ -33,7 +33,7 @@ public class PolyphonicVoice implements OnPreparedListener, OnCompletionListener
 	private MediaPlayer mp;
 	private int state;
 	
-	public PGPolyphonicVoice( AssetFileDescriptor afd )  throws IOException
+	public PolyphonicVoice( AssetFileDescriptor afd )  throws IOException
 	{
 		state = INVALID;
 		mp = new MediaPlayer();

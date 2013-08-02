@@ -20,24 +20,17 @@
 
 @implementation LowLatencyAudioAsset
 
-
-
 -(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices
 {
     self = [super init];
-    if(self) 
-    {
+    if(self) {
         voices = [[NSMutableArray alloc] init];  
-        [voices retain];
         
         NSURL *pathURL = [NSURL fileURLWithPath : path];
         
-        for (int x = 0; x < [numVoices intValue]; x++) 
-        {
-            AVAudioPlayer *player;
-            player = [[AVAudioPlayer alloc] initWithContentsOfURL:pathURL error: NULL];
-            [player retain];
-            [player prepareToPlay];   
+        for (int x = 0; x < [numVoices intValue]; x++) {
+            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:pathURL error: NULL];
+            [player prepareToPlay];
             [voices addObject:player];
         }
         
@@ -58,8 +51,7 @@
 
 - (void) stop
 {
-    for (int x = 0; x < [voices count]; x++) 
-    {
+    for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
         [player stop];
     }
@@ -79,12 +71,11 @@
 - (void) unload 
 {
     [self stop];
-    for (int x = 0; x < [voices count]; x++) 
-    {
+    for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
-        [player release];
+        player = nil;
     }
-    [voices release];
+    voices = nil;
 }
 
 @end

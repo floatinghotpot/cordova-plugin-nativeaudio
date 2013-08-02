@@ -20,26 +20,26 @@ import android.content.res.AssetFileDescriptor;
 
 public class LowLatencyAudioAsset {
 
-	private ArrayList<PGPolyphonicVoice> voices;
+	private ArrayList<PolyphonicVoice> voices;
 	private int playIndex = 0;
 	
 	public LowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices) throws IOException
 	{
-		voices = new ArrayList<PGPolyphonicVoice>();
+		voices = new ArrayList<PolyphonicVoice>();
 		
 		if ( numVoices < 0 )
 			numVoices = 0;
 		
 		for ( int x=0; x<numVoices; x++) 
 		{
-			PGPolyphonicVoice voice = new PGPolyphonicVoice(afd);
+			PolyphonicVoice voice = new PolyphonicVoice(afd);
 			voices.add( voice );
 		}
 	}
 	
 	public void play() throws IOException
 	{
-		PGPolyphonicVoice voice = voices.get(playIndex);
+		PolyphonicVoice voice = voices.get(playIndex);
 		voice.play();
 		playIndex++;
 		playIndex = playIndex % voices.size();
@@ -49,14 +49,14 @@ public class LowLatencyAudioAsset {
 	{
 		for ( int x=0; x<voices.size(); x++) 
 		{
-			PGPolyphonicVoice voice = voices.get(x);
+			PolyphonicVoice voice = voices.get(x);
 			voice.stop();
 		}
 	}
 	
 	public void loop() throws IOException
 	{
-		PGPolyphonicVoice voice = voices.get(playIndex);
+		PolyphonicVoice voice = voices.get(playIndex);
 		voice.loop();
 		playIndex++;
 		playIndex = playIndex % voices.size();
@@ -67,7 +67,7 @@ public class LowLatencyAudioAsset {
 		this.stop();
 		for ( int x=0; x<voices.size(); x++) 
 		{
-			PGPolyphonicVoice voice = voices.get(x);
+			PolyphonicVoice voice = voices.get(x);
 			voice.unload();
 		}
 		voices.removeAll(voices);
