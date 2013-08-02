@@ -83,7 +83,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 			AssetManager am = ctx.getResources().getAssets();
 			AssetFileDescriptor afd = am.openFd(fullPath);
 
-			PGLowLatencyAudioAsset asset = new PGLowLatencyAudioAsset(
+			LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
 					afd, voices);
 			assetMap.put(audioID, asset);
 
@@ -96,7 +96,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 	private PluginResult executePlayOrLoop(JSONArray data) {
 		String audioID = data.getString(0);
 		if (assetMap.containsKey(audioID)) {
-			PGLowLatencyAudioAsset asset = assetMap.get(audioID);
+			LowLatencyAudioAsset asset = assetMap.get(audioID);
 			if (LOOP.equals(action))
 				asset.loop();
 			else
@@ -126,7 +126,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 	private PluginResult executeStop(JSONArray data) {
 		String audioID = data.getString(0);
 		if (assetMap.containsKey(audioID)) {
-			PGLowLatencyAudioAsset asset = assetMap.get(audioID);
+			LowLatencyAudioAsset asset = assetMap.get(audioID);
 			asset.stop();
 		} else if (soundMap.containsKey(audioID)) {
 			ArrayList<Integer> streams = streamMap.get(audioID);
@@ -145,7 +145,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 	private PluginResult executeUnload(JSONArray data) {
 		String audioID = data.getString(0);
 		if (assetMap.containsKey(audioID)) {
-			PGLowLatencyAudioAsset asset = assetMap.get(audioID);
+			LowLatencyAudioAsset asset = assetMap.get(audioID);
 			asset.unload();
 			assetMap.remove(audioID);
 		} else if (soundMap.containsKey(audioID)) {
@@ -229,7 +229,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 		}
 
 		if (assetMap == null) {
-			assetMap = new HashMap<String, PGLowLatencyAudioAsset>();
+			assetMap = new HashMap<String, LowLatencyAudioAsset>();
 		}
 	}
 }
