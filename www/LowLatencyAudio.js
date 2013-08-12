@@ -29,6 +29,7 @@ preloadFX: function ( id, assetPath, success, fail) {
 },    
     
 preloadAudio: function ( id, assetPath, voices, success, fail) {
+	if(voices === undefined) voices = 1;
     return cordova.exec(success, fail, "LowLatencyAudio", "preloadAudio", [id, assetPath, voices]);
 },
     

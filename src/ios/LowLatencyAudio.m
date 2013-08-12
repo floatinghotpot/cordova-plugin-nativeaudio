@@ -85,9 +85,12 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
 
     NSLog( @"preloadAudio - %@: %@", audioID, assetPath );
     
-    NSNumber *voices;
+    NSNumber *voices = nil;
     if ( [arguments count] > 2 ) {
         voices = [arguments objectAtIndex:2];
+        if([voices isEqual:nil]) {
+            voices = [NSNumber numberWithInt:1];
+        }
     } else {
         voices = [NSNumber numberWithInt:1];
     }
@@ -107,7 +110,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
             
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: CONTENT_LOAD_REQUESTED];
         } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_NOT_FOUND];        
+            NSLog( @"audio file not found" );
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_NOT_FOUND];
         }
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];        
