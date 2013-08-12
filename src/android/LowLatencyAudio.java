@@ -64,6 +64,8 @@ public class LowLatencyAudio extends CordovaPlugin {
 			if (!soundMap.containsKey(audioID)) {
 				String assetPath = data.getString(1);
 				String fullPath = "www/".concat(assetPath);
+				
+				Log.d(LOGTAG, "preloadFX - " + audioID + ': ' + assetPath);
 
 				Context ctx = cordova.getActivity().getApplicationContext();
 				AssetManager am = ctx.getResources().getAssets();
@@ -88,6 +90,8 @@ public class LowLatencyAudio extends CordovaPlugin {
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
 				String assetPath = data.getString(1);
+				Log.d(LOGTAG, "preloadAudio - " + audioID + ': ' + assetPath);
+
 				int voices;
 				if (data.length() < 2) {
 					voices = 0;
@@ -120,6 +124,8 @@ public class LowLatencyAudio extends CordovaPlugin {
 		String audioID;
 		try {
 			audioID = data.getString(0);
+			//Log.d( LOGTAG, "play - " + audioID );
+
 			if (assetMap.containsKey(audioID)) {
 				LowLatencyAudioAsset asset = assetMap.get(audioID);
 				if (LOOP.equals(action))
@@ -157,6 +163,8 @@ public class LowLatencyAudio extends CordovaPlugin {
 		String audioID;
 		try {
 			audioID = data.getString(0);
+			//Log.d( LOGTAG, "stop - " + audioID );
+			
 			if (assetMap.containsKey(audioID)) {
 				LowLatencyAudioAsset asset = assetMap.get(audioID);
 				asset.stop();
@@ -183,6 +191,8 @@ public class LowLatencyAudio extends CordovaPlugin {
 		String audioID;
 		try {
 			audioID = data.getString(0);
+			Log.d( LOGTAG, "unload - " + audioID );
+			
 			if (assetMap.containsKey(audioID)) {
 				LowLatencyAudioAsset asset = assetMap.get(audioID);
 				asset.unload();

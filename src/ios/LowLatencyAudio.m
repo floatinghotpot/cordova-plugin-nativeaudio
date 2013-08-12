@@ -46,6 +46,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSString *audioID = [arguments objectAtIndex:0]; 
     NSString *assetPath = [arguments objectAtIndex:1]; 
     
+    NSLog( @"preloadFX - %@: %@", audioID, assetPath );
+
     if(audioMapping == nil) {
         audioMapping = [NSMutableDictionary dictionary];
     }
@@ -80,6 +82,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0]; 
     NSString *assetPath = [arguments objectAtIndex:1]; 
+
+    NSLog( @"preloadAudio - %@: %@", audioID, assetPath );
     
     NSNumber *voices;
     if ( [arguments count] > 2 ) {
@@ -119,6 +123,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0]; 
     
+    //NSLog( @"play - %@", audioID );
+
     if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
@@ -144,6 +150,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0]; 
     
+    //NSLog( @"stop - %@", audioID );
+
     if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
@@ -168,6 +176,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0]; 
     
+    NSLog( @"loop - %@", audioID );
+
     if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
@@ -192,7 +202,9 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0]; 
     
-    if ( audioMapping ) {
+    NSLog( @"unload - %@", audioID );
+
+   if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
             LowLatencyAudioAsset *_asset = (LowLatencyAudioAsset*) asset;
