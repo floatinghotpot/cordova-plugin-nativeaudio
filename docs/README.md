@@ -1,6 +1,9 @@
 
 Examples to use LowLatencyAudio plugin.
 
+// the resource must be relative path under cordova web files root folder "www/".
+// for example, if the file is under "www/audio/music.mp3", then:
+
 var music_mp3 = 'audio/music.mp3';
 var click_sound = 'audio/click.mp3';
 
