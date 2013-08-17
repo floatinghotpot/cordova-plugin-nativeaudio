@@ -46,7 +46,7 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSString *audioID = [arguments objectAtIndex:0]; 
     NSString *assetPath = [arguments objectAtIndex:1]; 
     
-    NSLog( @"preloadFX - %@: %@", audioID, assetPath );
+    NSLog( @"preloadFX - %@", assetPath );
 
     if(audioMapping == nil) {
         audioMapping = [NSMutableDictionary dictionary];
@@ -83,7 +83,7 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSString *audioID = [arguments objectAtIndex:0]; 
     NSString *assetPath = [arguments objectAtIndex:1]; 
 
-    NSLog( @"preloadAudio - %@: %@", audioID, assetPath );
+    NSLog( @"preloadAudio - %@", assetPath );
     
     NSNumber *voices = nil;
     if ( [arguments count] > 2 ) {
