@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" name="viewport" />
+		<title>Piano</title>
+		<script src="cordova.js"></script>
+		<script>
+			
+			var lla,
+				notes = ['2G', '2Ab', '2A', '2Bb', '2B', '3C', '3Db', '3D', '3Eb', '3E', '3F', '3Gb', '3G', '3Ab', '3A', '3Bb', '3B', '4C', '4Db', '4D', '4Eb', '4E'];
+			
+			function onBodyLoad() {		
+				document.addEventListener("deviceready", onDeviceReady, false);
+			}
+			
+			function onDeviceReady() {
+				if( window.plugins && window.plugins.LowLatencyAudio ) {
+					
+					lla = window.plugins.LowLatencyAudio;	
+					
+					for (x in notes) {
+						lla.preloadFX(notes[x], 'assets/' + notes[x] + '.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
+					}			
+				}
+			}
+			
+			function play(note) {
+				lla.play(note);
+			}
+			
+		</script>
+		<style type='text/css'>
+			* {
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+				-webkit-user-select: auto !important;
+			}
+			html, body { 
+				margin:0; 
+				padding:0; 
+				width:100%; 
+				height:100%;
+				background:#000; 
+			}
+			#wrapper-white { 
+				position:absolute; 
+				top:0; 
+				left:0; 
+				width:100%; 
+				height:100%; 
+			}
+			#wrapper-black {
+				position:absolute;
+				top:0;
+				left:3.84615384615385%;
+				width:92.30769230769231%;
+				height:50%;
+			}
+			.note {
+				float:left;
+				height:100%;
+				position:relative;
+				text-align:center;
+				font-size:20px;
+				font-weight:bold;
+				font-family:sans-serif;
+				outline:#999 solid 1px;
+			}
+			#wrapper-white .note {
+				width:7.69230769230769%;
+				background:#fff;
+			}
+			#wrapper-black .note {
+				width:6.33333333333333%;
+				margin:0 1% 0 1%;
+				background:#000;
+			}
+			.note span {
+				position:absolute;
+				bottom:15px;
+				left:0;
+				width:100%;
+			}
+			#wrapper-white .note span {
+				color:#000;
+			}
+			#wrapper-black .note span {
+				color:#fff;
+			}
+		</style>
+	</head>
+	<body onload="onBodyLoad();">
+		<div id="wrapper-white">
+			<div id="2G" class="note" ontouchstart="play('2G');"><span>G</span></div>
+			<div id="2A" class="note" ontouchstart="play('2A');"><span>A</span></div>
+			<div id="2B" class="note" ontouchstart="play('2B');"><span>B</span></div>
+			<div id="3C" class="note" ontouchstart="play('3C');"><span>C</span></div>
+			<div id="3D" class="note" ontouchstart="play('3D');"><span>D</span></div>
+			<div id="3E" class="note" ontouchstart="play('3E');"><span>E</span></div>
+			<div id="3F" class="note" ontouchstart="play('3F');"><span>F</span></div>
+			<div id="3G" class="note" ontouchstart="play('3G');"><span>G</span></div>
+			<div id="3A" class="note" ontouchstart="play('3A');"><span>A</span></div>
+			<div id="3B" class="note" ontouchstart="play('3B');"><span>B</span></div>
+			<div id="4C" class="note" ontouchstart="play('4C');"><span>C</span></div>
+			<div id="4D" class="note" ontouchstart="play('4D');"><span>D</span></div>
+			<div id="4E" class="note" ontouchstart="play('4E');"><span>E</span></div>
+		</div>
+		<div id="wrapper-black">
+			<div id="2Ab" class="note" ontouchstart="play('2Ab');"><span>Ab</span></div>
+			<div id="2Bb" class="note" ontouchstart="play('2Bb');"><span>Bb</span></div>
+			<div class="note" style=" background:transparent; outline:none; "></div>
+			<div id="3Db" class="note" ontouchstart="play('3Db');"><span>Db</span></div>
+			<div id="3Eb" class="note" ontouchstart="play('3Eb');"><span>Eb</span></div>
+			<div class="note" style=" background:transparent; outline:none; "></div>
+			<div id="3Gb" class="note" ontouchstart="play('3Gb');"><span>Gb</span></div>
+			<div id="3Ab" class="note" ontouchstart="play('3Ab');"><span>Ab</span></div>
+			<div id="3Bb" class="note" ontouchstart="play('3Bb');"><span>Bb</span></div>
+			<div class="note" style=" background:transparent; outline:none; "></div>
+			<div id="4Db" class="note" ontouchstart="play('4Db');"><span>Db</span></div>
+			<div id="4Eb" class="note" ontouchstart="play('4Eb');"><span>Eb</span></div>
+		</div>
+	</body>
+</html>
