@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-           id="org.apache.cordova.plugin.lowlatencyaudio"
-      version="0.1.0">
+           id="com.rjfun.cordova.plugin.lowlatencyaudio"
+      version="1.0">
     <name>LowLatencyAudio</name>
 
     <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
@@ -13,15 +13,15 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="LowLatencyAudio">
-                <param name="android-package" value="org.apache.cordova.plugin.LowLatencyAudio"/>
+                <param name="android-package" value="com.rjfun.cordova.plugin.LowLatencyAudio"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
         </config-file>
 
-        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/org/apache/cordova/plugin" />
-        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/org/apache/cordova/plugin" />
-        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/org/apache/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/com/rjfun/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin" />
+        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/rjfun/cordova/plugin" />
         
      </platform>
      
