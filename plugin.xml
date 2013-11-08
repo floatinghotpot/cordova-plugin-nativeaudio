@@ -7,9 +7,12 @@
       
     <name>LowLatencyAudio</name>
 	<description>Add low latency audio support to Cordova/PhoneGap apps/games, since HTML5 audio is very poor in mobile browser</description>
-	<author>Developed by Andrew Trice, ported by Liming Xie</author>
+	<author>Developed by Andrew Trice, updated by Liming Xie</author>
 	<license>MIT</license>
-	
+	<engines>
+	    <engine name="cordova" version=">=3.0" />
+	</engines>
+
     <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
         <clobbers target="window.plugins.LowLatencyAudio" />
     </js-module>
