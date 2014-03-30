@@ -26,7 +26,7 @@
     int playIndex;
 }
 
--(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices;
+-(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices withVolume:(NSNumber*) volume;
 - (void) play;
 - (void) stop;
 - (void) loop;
