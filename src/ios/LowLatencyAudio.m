@@ -15,6 +15,9 @@
 // OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+//
+// Modified 22-05-2014 Dave Cozens to add ability to use device absolute path or path relative to cordova www dir...
+//
 
 #import "LowLatencyAudio.h"
 
@@ -55,15 +58,22 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSNumber* existingReference = [audioMapping objectForKey: audioID];
     if (existingReference == nil) {
         NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-        //NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
-        
         NSString* path = [NSString stringWithFormat:@"%@", assetPath];
+        NSString* pathFromWWW = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
         
         
         NSLog(@"basePath: %@", basePath);
         NSLog(@"path: %@", path);
         if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
             NSURL *pathURL = [NSURL fileURLWithPath : path];
+            CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
+            SystemSoundID soundID;
+            AudioServicesCreateSystemSoundID(soundFileURLRef, & soundID);
+            [audioMapping setObject:[NSNumber numberWithInt:soundID]  forKey: audioID];
+            
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: CONTENT_LOAD_REQUESTED];
+        } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {
+            NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];
             CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
             SystemSoundID soundID;
             AudioServicesCreateSystemSoundID(soundFileURLRef, & soundID);
@@ -107,11 +117,16 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSNumber* existingReference = [audioMapping objectForKey: audioID];
     if (existingReference == nil) {
         NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-        //NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
         NSString* path = [NSString stringWithFormat:@"%@", assetPath];
+        NSString* pathFromWWW = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
         
         if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
             LowLatencyAudioAsset* asset = [[LowLatencyAudioAsset alloc] initWithPath:path withVoices:voices];
+            [audioMapping setObject:asset  forKey: audioID];
+            
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: CONTENT_LOAD_REQUESTED];
+        } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {
+            LowLatencyAudioAsset* asset = [[LowLatencyAudioAsset alloc] initWithPath:pathFromWWW withVoices:voices];
             [audioMapping setObject:asset  forKey: audioID];
             
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: CONTENT_LOAD_REQUESTED];
