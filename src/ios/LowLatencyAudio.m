@@ -43,11 +43,11 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     CDVPluginResult *pluginResult;
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0]; 
-    NSString *assetPath = [arguments objectAtIndex:1]; 
+    NSString *audioID = [arguments objectAtIndex:0];
+    NSString *assetPath = [arguments objectAtIndex:1];
     
     NSLog( @"preloadFX - %@", assetPath );
-
+    
     if(audioMapping == nil) {
         audioMapping = [NSMutableDictionary dictionary];
     }
@@ -55,8 +55,13 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSNumber* existingReference = [audioMapping objectForKey: audioID];
     if (existingReference == nil) {
         NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-        NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+        //NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
         
+        NSString* path = [NSString stringWithFormat:@"%@", assetPath];
+        
+        
+        NSLog(@"basePath: %@", basePath);
+        NSLog(@"path: %@", path);
         if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
             NSURL *pathURL = [NSURL fileURLWithPath : path];
             CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
@@ -66,12 +71,12 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
             
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: CONTENT_LOAD_REQUESTED];
         } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_NOT_FOUND];        
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_NOT_FOUND];
         }
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];
     }
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
@@ -80,9 +85,9 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     CDVPluginResult *pluginResult;
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0]; 
-    NSString *assetPath = [arguments objectAtIndex:1]; 
-
+    NSString *audioID = [arguments objectAtIndex:0];
+    NSString *assetPath = [arguments objectAtIndex:1];
+    
     NSLog( @"preloadAudio - %@", assetPath );
     
     NSNumber *voices = nil;
@@ -102,7 +107,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     NSNumber* existingReference = [audioMapping objectForKey: audioID];
     if (existingReference == nil) {
         NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-        NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+        //NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+        NSString* path = [NSString stringWithFormat:@"%@", assetPath];
         
         if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
             LowLatencyAudioAsset* asset = [[LowLatencyAudioAsset alloc] initWithPath:path withVoices:voices];
@@ -114,9 +120,9 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_NOT_FOUND];
         }
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];
     }
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
@@ -125,10 +131,10 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     CDVPluginResult *pluginResult;
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0]; 
+    NSString *audioID = [arguments objectAtIndex:0];
     
     //NSLog( @"play - %@", audioID );
-
+    
     if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
@@ -141,9 +147,9 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
         
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: PLAY_REQUESTED];
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];
     }
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
@@ -152,10 +158,10 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     CDVPluginResult *pluginResult;
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0]; 
+    NSString *audioID = [arguments objectAtIndex:0];
     
     //NSLog( @"stop - %@", audioID );
-
+    
     if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
@@ -164,12 +170,12 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
             
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: STOP_REQUESTED];
         } else if ( [asset isKindOfClass:[NSNumber class]] ) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESTRICTED];        
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESTRICTED];
         }
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];
     }
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
@@ -178,10 +184,10 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     CDVPluginResult *pluginResult;
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0]; 
+    NSString *audioID = [arguments objectAtIndex:0];
     
     NSLog( @"loop - %@", audioID );
-
+    
     if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
@@ -190,12 +196,12 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
             
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: STOP_REQUESTED];
         } else if ( [asset isKindOfClass:[NSNumber class]] ) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESTRICTED];        
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESTRICTED];
         }
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];
     }
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
@@ -204,11 +210,11 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     CDVPluginResult *pluginResult;
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0]; 
+    NSString *audioID = [arguments objectAtIndex:0];
     
     NSLog( @"unload - %@", audioID );
-
-   if ( audioMapping ) {
+    
+    if ( audioMapping ) {
         NSObject* asset = [audioMapping objectForKey: audioID];
         if ([asset isKindOfClass:[LowLatencyAudioAsset class]]) {
             LowLatencyAudioAsset *_asset = (LowLatencyAudioAsset*) asset;
@@ -221,9 +227,9 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
         [audioMapping removeObjectForKey: audioID];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: UNLOAD_REQUESTED];
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];
     }
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
