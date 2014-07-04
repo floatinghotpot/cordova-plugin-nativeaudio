@@ -3,12 +3,16 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
            id="com.rjfun.cordova.plugin.lowlatencyaudio"
-      version="1.0">
+      version="1.0.0">
       
     <name>LowLatencyAudio</name>
 	<description>Add low latency audio support to Cordova/PhoneGap apps/games, since HTML5 audio is very poor in mobile browser</description>
-	<author>Developed by Andrew Trice, updated by Liming Xie</author>
+	<author>Developed by Andrew Trice, modified by Liming Xie</author>
 	<license>MIT</license>
+	<keywords>audio,mp3</keywords>
+    <repo>https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio.git</repo>
+    <issue>https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio/issues</issue>
+
 	<engines>
 	    <engine name="cordova" version=">=3.0" />
 	</engines>
