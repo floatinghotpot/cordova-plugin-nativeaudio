@@ -12,8 +12,6 @@ Prerequisites: A Cordova/PhoneGap 3.0+ project for iOS or Android.
 5. [Example](#example)
 6. [Demo Projects](#demo-projects)
 7. [Credits](#credits)
-8. [License](#license)
-
 ##Description
 
 The low latency audio plugin is designed to enable low latency and polyphonic/background audio from Cordova/PhoneGap applications.
@@ -161,27 +159,5 @@ cordova plugin add https://github.com/floatinghotpot/cordova-plugin-lowlatencyau
 
 ## Credits
 
-The first iteration of the Plugin was built by [Andrew Trice](https://github.com/triceam/LowLatencyAudio). This plugin was ported to Plugman / Cordova 3 by [Raymond Xie](https://github.com/floatinghotpot), [SidneyS](https://github.com/sidneys) and other committers.
-
-
-## License
-
-[The MIT License (MIT)](http://www.opensource.org/licenses/mit-license.html)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+The first iteration of the Plugin was built by [Andrew Trice](https://github.com/triceam/LowLatencyAudio).
+This plugin was ported to Plugman / Cordova 3 by [Raymond Xie](https://github.com/floatinghotpot), [SidneyS](https://github.com/sidneys) and other committers.
