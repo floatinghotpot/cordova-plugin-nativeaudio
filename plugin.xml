@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
            id="com.triceam.cordova.plugin.lowlatencyaudio"
-      version="1.1.0">
+      version="1.1.1">
       
     <name>LowLatencyAudio</name>
 	<description>Cordova 3.0+ Plugin for Low Latency & Polyphonic Audio Playback on Android and iOS, especially important for Games.</description>
@@ -15,7 +15,7 @@
 	</engines>
 
     <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
-        <clobbers target="window.plugins.LowLatencyAudio" />
+        <clobbers target="LowLatencyAudio" />
     </js-module>
 
     <!-- android -->
