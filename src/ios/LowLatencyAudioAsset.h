@@ -1,6 +1,6 @@
 //
-//  PGAudioAsset.h
-//  PGAudio
+//  LowLatencyAudioAsset.h
+//  LowLatencyAudioAsset
 //
 //  Created by Andrew Trice on 1/23/12.
 //

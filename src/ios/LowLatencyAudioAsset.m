@@ -1,6 +1,6 @@
 //
-//  PGAudioAsset.m
-//  PGAudio
+//  LowLatencyAudioAsset.m
+//  LowLatencyAudioAsset
 //
 //  Created by Andrew Trice on 1/23/12.
 //

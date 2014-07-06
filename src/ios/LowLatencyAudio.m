@@ -1,6 +1,6 @@
 //
-//  PGAudio.m
-//  PGAudio
+//  LowLatencyAudio.m
+//  LowLatencyAudio
 //
 //  Created by Andrew Trice on 1/19/12.
 //
@@ -14,9 +14,6 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 // OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//
-// Modified 22-05-2014 Dave Cozens to add ability to use device absolute path or path relative to cordova www dir...
 //
 
 #import "LowLatencyAudio.h"
@@ -32,13 +29,9 @@ NSString* STOP_REQUESTED = @"STOP REQUESTED";
 NSString* UNLOAD_REQUESTED = @"UNLOAD REQUESTED";
 NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
 
--(CDVPlugin*) initWithWebView:(UIWebView*)theWebView
+- (void)pluginInitialize
 {
-    self = (LowLatencyAudio*)[super initWithWebView:(UIWebView*)theWebView];
-    if (self) {
-    	// do some init work here.
-    }
-    return self;
+    // do some init work here.
 }
 
 - (void) preloadFX:(CDVInvokedUrlCommand *)command
