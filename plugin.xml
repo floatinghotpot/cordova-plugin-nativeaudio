@@ -50,6 +50,9 @@
          <header-file src="src/ios/LowLatencyAudioAsset.h" />
          <source-file src="src/ios/LowLatencyAudioAsset.m" />
          
+         <framework src="AVFoundation.framework" weak="true" /> 
+         <framework src="AudioToolbox.framework" weak="true" /> 
+         
 	</platform>
           
 </plugin>
