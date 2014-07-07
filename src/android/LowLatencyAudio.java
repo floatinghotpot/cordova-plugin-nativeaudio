@@ -11,7 +11,7 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.triceam.cordova.plugin;
+package com.rjfun.cordova.plugin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 
 /**
- * @author triceam
+ * @author Andrew Trice
  *
  */
 public class LowLatencyAudio extends CordovaPlugin {
