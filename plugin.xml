@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-           id="com.rjfun.cordova.plugin.lowlatencyaudio"
-      version="1.0.0">
+           id="com.triceam.cordova.plugin.lowlatencyaudio"
+      version="1.1.2">
       
     <name>LowLatencyAudio</name>
-	<description>Add low latency audio support to Cordova/PhoneGap apps/games, since HTML5 audio is very poor in mobile browser</description>
-	<author>Developed by Andrew Trice, modified by Liming Xie</author>
+	<description>Cordova 3.0+ Plugin for Low Latency & Polyphonic Audio Playback on Android and iOS, especially important for Games.</description>
 	<license>MIT</license>
-	<keywords>audio,mp3</keywords>
+	<keywords>audio,mp3,games</keywords>
     <repo>https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio.git</repo>
     <issue>https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio/issues</issue>
 
@@ -25,15 +22,15 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="LowLatencyAudio">
-                <param name="android-package" value="com.rjfun.cordova.plugin.LowLatencyAudio"/>
+                <param name="android-package" value="com.triceam.cordova.plugin.LowLatencyAudio"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
         </config-file>
 
-        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/com/rjfun/cordova/plugin" />
-        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin" />
-        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/rjfun/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/com/triceam/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/com/triceam/cordova/plugin" />
+        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/triceam/cordova/plugin" />
         
      </platform>
      
@@ -49,6 +46,9 @@
          <source-file src="src/ios/LowLatencyAudio.m" />
          <header-file src="src/ios/LowLatencyAudioAsset.h" />
          <source-file src="src/ios/LowLatencyAudioAsset.m" />
+         
+         <framework src="AVFoundation.framework" weak="true" /> 
+         <framework src="AudioToolbox.framework" weak="true" /> 
          
 	</platform>
           

@@ -1,5 +1,6 @@
 //
-//  CDVAudio.h
+//  LowLatencyAudio.h
+//  LowLatencyAudio
 //
 //  Created by Andrew Trice on 1/19/12.
 //

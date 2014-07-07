@@ -1,6 +1,6 @@
 //
-//  PGAudioAsset.m
-//  PGAudio
+//  LowLatencyAudioAsset.m
+//  LowLatencyAudioAsset
 //
 //  Created by Andrew Trice on 1/23/12.
 //
@@ -20,7 +20,7 @@
 
 @implementation LowLatencyAudioAsset
 
--(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices
+-(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices withVolume:(NSNumber*) volume
 {
     self = [super init];
     if(self) {
@@ -30,6 +30,7 @@
         
         for (int x = 0; x < [numVoices intValue]; x++) {
             AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:pathURL error: NULL];
+            player.volume = volume.floatValue;
             [player prepareToPlay];
             [voices addObject:player];
         }

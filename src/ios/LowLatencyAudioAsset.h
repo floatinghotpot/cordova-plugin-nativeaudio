@@ -1,6 +1,6 @@
 //
-//  PGAudioAsset.h
-//  PGAudio
+//  LowLatencyAudioAsset.h
+//  LowLatencyAudioAsset
 //
 //  Created by Andrew Trice on 1/23/12.
 //
@@ -26,7 +26,7 @@
     int playIndex;
 }
 
--(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices;
+-(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices withVolume:(NSNumber*) volume;
 - (void) play;
 - (void) stop;
 - (void) loop;

@@ -19,35 +19,34 @@
  *
 */
 
-var argscheck = require('cordova/argscheck'),
-    exec = require('cordova/exec');
+var exec = require('cordova/exec');
 
-var mplExport = {
+module.exports  = {
 
-preloadFX: function ( id, assetPath, success, fail) {
-    return cordova.exec(success, fail, "LowLatencyAudio", "preloadFX", [id, assetPath]);
-},    
-    
-preloadAudio: function ( id, assetPath, voices, success, fail) {
-	if(voices === undefined) voices = 1;
-    return cordova.exec(success, fail, "LowLatencyAudio", "preloadAudio", [id, assetPath, voices]);
-},
-    
-play: function (id, success, fail) {
-    return cordova.exec(success, fail, "LowLatencyAudio", "play", [id]);
-},
-    
-stop: function (id, success, fail) {
-    return cordova.exec(success, fail, "LowLatencyAudio", "stop", [id]);
-},
-    
-loop: function (id, success, fail) {
-    return cordova.exec(success, fail, "LowLatencyAudio", "loop", [id]);
-},
-    
-unload: function (id, success, fail) {
-    return cordova.exec(success, fail, "LowLatencyAudio", "unload", [id]);
-}
+    preloadFX: function(id, assetPath, success, fail) {
+        return cordova.exec(success, fail, "LowLatencyAudio", "preloadFX", [id, assetPath]);
+    },
+
+    preloadAudio: function(id, assetPath, volume, voices, success, fail) {
+        if (voices === undefined) voices = 1;
+        if (volume === undefined) volume = 1.0;
+
+        return cordova.exec(success, fail, "LowLatencyAudio", "preloadAudio", [id, assetPath, volume, voices]);
+    },
+
+    play: function(id, success, fail) {
+        return cordova.exec(success, fail, "LowLatencyAudio", "play", [id]);
+    },
+
+    stop: function(id, success, fail) {
+        return cordova.exec(success, fail, "LowLatencyAudio", "stop", [id]);
+    },
+
+    loop: function(id, success, fail) {
+        return cordova.exec(success, fail, "LowLatencyAudio", "loop", [id]);
+    },
+
+    unload: function(id, success, fail) {
+        return cordova.exec(success, fail, "LowLatencyAudio", "unload", [id]);
+    }
 };
-
-module.exports = mplExport;
