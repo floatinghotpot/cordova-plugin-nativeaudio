@@ -34,6 +34,18 @@ cordova plugin add https://github.com/floatinghotpot/cordova-plugin-lowlatencyau
    Note: Make sure to wait for the "deviceready" event before attepting to load assets.
 2. Play the audio asset.
 3. When done, unload the audio asset.
+4. in hotjs-audio.js, the same interface also implemented for html5 audio, when code run in PC browser, it will use html5, when in cordova, it will use lowlatencyaudio plugin.  
+
+```html
+<script src='plugins/hotjs-audio.js'></script>
+```
+```javascript
+function onDeviceReady() {
+    hotjs.Audio.init();
+
+    // in your code, replace 'window.plugins.xxx()' with 'hotjs.Audio.xxx()'
+}
+```
 
 ##API Methods
 ```javascript
@@ -161,3 +173,4 @@ cordova plugin add https://github.com/floatinghotpot/cordova-plugin-lowlatencyau
 
 The first iteration of the Plugin was built by [Andrew Trice](https://github.com/triceam/LowLatencyAudio).
 This plugin was ported to Plugman / Cordova 3 by [Raymond Xie](https://github.com/floatinghotpot), [SidneyS](https://github.com/sidneys) and other committers.
+
