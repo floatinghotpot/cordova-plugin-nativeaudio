@@ -61,12 +61,13 @@ The preloadFX function loads an audio file into memory.  Assets that are loaded 
  * fail - error/fail callback function
 
 ```javascript
-preloadAudio: function ( id, assetPath, voices, volume, success, fail)
+preloadAudio: function ( id, assetPath, volume, voices, success, fail)
 ```
 
 The preloadAudio function loads an audio file into memory.  Assets that are loaded using preloadAudio are managed/played using AVAudioPlayer.   These have more overhead than assets laoded via preloadFX, and can be looped/stopped.   By default, there is a single "voice" - only one instance that will be stopped & restarted when you hit play.  If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio. The default volume is for a preloaded sound is 1.0, a lower default volume can be preset by using a numerical value from 0.1 to 1.0.
 
-* params: ID - string unique ID for the audio file
+* params
+ * ID - string unique ID for the audio file
  * assetPath - the relative path to the audio asset within the www directory
  * volume - the volume of the preloaded sound (0.1 to 1.0)
  * voices - the number of polyphonic voices available
