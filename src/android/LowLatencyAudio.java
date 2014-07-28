@@ -92,11 +92,11 @@ public class LowLatencyAudio extends CordovaPlugin {
 				String assetPath = data.getString(1);
 				Log.d(LOGTAG, "preloadAudio - " + audioID + ": " + assetPath);
 				
-				float volume;
+				double volume;
 				if (data.length() < 2) {
 					volume = 1.0;
 				} else {
-					volume = data.getFloat(2);
+					volume = data.getDouble(2);
 				}
 
 				int voices;
@@ -113,7 +113,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 				AssetFileDescriptor afd = am.openFd(fullPath);
 
 				LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
-						afd, voices, volume);
+						afd, voices, (float)volume);
 				assetMap.put(audioID, asset);
 
 				return new PluginResult(Status.OK);
