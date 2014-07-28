@@ -33,12 +33,13 @@ public class PolyphonicVoice implements OnPreparedListener, OnCompletionListener
 	private MediaPlayer mp;
 	private int state;
 	
-	public PolyphonicVoice( AssetFileDescriptor afd )  throws IOException
+	public PolyphonicVoice( AssetFileDescriptor afd, float volume)  throws IOException
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
 		mp.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-		mp.setAudioStreamType(AudioManager.STREAM_MUSIC);  
+		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
 	
