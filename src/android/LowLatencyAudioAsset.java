@@ -23,7 +23,7 @@ public class LowLatencyAudioAsset {
 	private ArrayList<PolyphonicVoice> voices;
 	private int playIndex = 0;
 	
-	public LowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices) throws IOException
+	public LowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
 	{
 		voices = new ArrayList<PolyphonicVoice>();
 		
@@ -32,7 +32,7 @@ public class LowLatencyAudioAsset {
 		
 		for ( int x=0; x<numVoices; x++) 
 		{
-			PolyphonicVoice voice = new PolyphonicVoice(afd);
+			PolyphonicVoice voice = new PolyphonicVoice(afd, volume);
 			voices.add( voice );
 		}
 	}
