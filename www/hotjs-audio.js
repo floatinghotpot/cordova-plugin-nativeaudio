@@ -19,7 +19,7 @@ var hotjs = hotjs || {};
             this.res_cache[ id ] = res;
         },
 
-        preloadAudio: function(id, assetPath, voices, volume, success, fail) {
+        preloadAudio: function(id, assetPath, volume, voices, success, fail) {
             var res = new Audio();
             res.onload = success;
             res.onerror = fail;
