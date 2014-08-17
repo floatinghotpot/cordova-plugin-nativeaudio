@@ -17,6 +17,7 @@
 //
 
 #import "LowLatencyAudio.h"
+#import <AVFoundation/AVAudioSession.h>
 
 @implementation LowLatencyAudio
 
@@ -32,6 +33,19 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
 - (void)pluginInitialize
 {
     // do some init work here.
+
+    // set up Audio so that user can play own music
+    AudioSessionInitialize(NULL, NULL, nil , nil);
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    
+    NSError *setCategoryError = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayback
+                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                        error:&setCategoryError]) {
+        // handle error
+    }
+    
+    [session setActive: YES error: nil];
 }
 
 - (void) preloadFX:(CDVInvokedUrlCommand *)command
