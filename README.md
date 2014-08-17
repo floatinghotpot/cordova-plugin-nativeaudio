@@ -121,8 +121,11 @@ In this example, the resources reside in a relative path under the Cordova root 
 For example, if the file is under "www/audio/music.mp3", then:
 
 ```javascript
-var music_mp3 = 'audio/music.mp3';
-var click_sound = 'audio/click.mp3'
+// map the media id and res file
+var media = {
+	'music': 'audio/music.mp3',
+	'click': 'audio/click.mp3'
+};
 ```
 
 The implementation goes as follows:
@@ -132,27 +135,27 @@ if( window.plugins && window.plugins.LowLatencyAudio ) {
 	var lla = window.plugins.LowLatencyAudio;
 	
 	// preload audio resource
-	lla.preloadAudio( music_mp3, music_mp3, 1, function(msg){
+	lla.preloadAudio( 'music', media['music'], 1, 1, function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
 	
-	lla.preloadFX( click_sound, click_sound, function(msg){
+	lla.preloadFX( 'click', media['click'], function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
 	
 	// now start playing
-	lla.play( click_sound );
-	lla.loop( music_mp3 );
+	lla.play( 'click' );
+	lla.loop( 'music' );
 
 	// stop after 1 min	
 	window.setTimeout( function(){
-		//lla.stop( click_sound );
-		lla.stop( music_mp3 );
+		//lla.stop( 'click' );
+		lla.stop( 'music' );
 			
-		lla.unload( music_mp3 );
-		lla.unload( click_sound );
+		lla.unload( 'music' );
+		lla.unload( 'click' );
 	}, 1000 * 60 );
 }
 ```
