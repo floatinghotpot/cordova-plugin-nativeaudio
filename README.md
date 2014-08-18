@@ -1,27 +1,26 @@
 #Cordova Native Audio Plugin
 =======================
 
-Cordova/PhoneGap 3.0+ project for iOS or Android.
+Cordova plugin for native audio playback for the usage in HTML5 games & audio applications.
+Community-driven fork of the Low Latency Audio Plugin.
 
 ## Index
 
 1. [Description](#description)
-2. [Instawindow.plugins.nativeaudiotion](#instawindow.plugins.nativeaudiotion)
-3. [Usage](#usage)
-4. [API Methods](#api-methods)
-5. [Example](#example)
-6. [Demo Projects](#demo-projects)
-7. [Credits](#credits)
+3. [Roadmap](#roadmap)
+4. [History](#history)
+5. [API](#api)
+6. [Demo](#demo)
 
 ##Description
 
-Audio extension for concurrent (multi-channel), polyphonic (multi-voice) and latency-reduced (caching) audio playback, designed for games and audio applications.
+Cordova plugin for concurrent (multi-channel), polyphonic (multi-voice) and latency-reduced (caching) audio playback. Designed for usage in HTML5 games and hybrid audio applications.
 
 
 ##Roadmap
 
-Following the Cordova core philosophy, this is a "shim" for a mobile web audio solution which is as fast and feature-rich as the native APIs.
-On mobile, neither the Web Audio API or HTML5 Audio offer fast cross-platform solutions with support for polyphony and concurrency.
+Following the Cordova core philosophy, this is a "shim" for a mobile web audio solution which is as fast and feature-rich as the native APIs.On mobile, neither the Web Audio API or HTML5 Audio offer fast cross-platform solutions with support for polyphony and concurrency.
+
 Should be replaced by a W3C solution as soon as it offers comparable performance across devices.
 
 
@@ -45,7 +44,7 @@ cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
 3. Unload the audio asset.
 
 
-##API Methods
+##API
 ```javascript
 preloadSimple: function ( id, assetPath, success, fail)
 ```
