@@ -1,5 +1,5 @@
 //
-//  nativeaudio.m
+//  NativeAudio.m
 //  NativeAudio
 //
 //  Created by Sidney Bofah on 2014-06-26.
@@ -16,7 +16,7 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "nativeaudio.h"
+#import "NativeAudio.h"
 #import <AVFoundation/AVAudioSession.h>
 
 @implementation NativeAudio

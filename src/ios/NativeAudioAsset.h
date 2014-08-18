@@ -1,5 +1,5 @@
 //
-//  nativeaudio-asset.m
+//  NativeAudioAsset.m
 //  NativeAudioAsset
 //
 //  Created by Sidney Bofah on 2014-06-26.

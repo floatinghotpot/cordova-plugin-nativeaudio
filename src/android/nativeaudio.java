@@ -1,5 +1,5 @@
 //
-//  nativeaudio.java
+//  NativeAudio.java
 //
 //  Created by Sidney Bofah on 2014-06-26.
 //
@@ -36,10 +36,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 
-/**
- * @author Andrew Trice
- *
- */
+
 public class NativeAudio extends CordovaPlugin {
 
 	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
@@ -57,11 +54,11 @@ public class NativeAudio extends CordovaPlugin {
 	private static final String LOGTAG = "NativeAudio";
 	
 	private static SoundPool soundPool;
-	private static HashMap<String, NativeAudioAsset> assetMap; 
+	private static HashMap<String, NativeAudioAsset> assetMap;
 	private static HashMap<String, Integer> soundMap; 
 	private static HashMap<String, ArrayList<Integer>> streamMap; 
 	
-	private PluginResult executePreloadFX(JSONArray data) {
+	private PluginResult executePreloadSimple(JSONArray data) {
 		String audioID;
 		try {
 			audioID = data.getString(0);
@@ -88,7 +85,7 @@ public class NativeAudio extends CordovaPlugin {
 		return new PluginResult(Status.OK);
 	}
 	
-	private PluginResult executePreloadAudio(JSONArray data) {
+	private PluginResult executePreloadComplex(JSONArray data) {
 		String audioID;
 		try {
 			audioID = data.getString(0);
@@ -236,14 +233,14 @@ public class NativeAudio extends CordovaPlugin {
 			if (PRELOAD_SIMPLE.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePreloadFX(data) );
+		            	callbackContext.sendPluginResult( executePreloadSimple(data) );
 		            }
 		        });				
 				
 			} else if (PRELOAD_COMPLEX.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePreloadAudio(data) );
+		            	callbackContext.sendPluginResult( executePreloadComplex(data) );
 		            }
 		        });				
 

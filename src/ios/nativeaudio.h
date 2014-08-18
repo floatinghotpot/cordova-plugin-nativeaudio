@@ -1,5 +1,5 @@
 //
-//  nativeaudio.h
+//  NativeAudio.h
 //  NativeAudio
 //
 //  Created by Sidney Bofah on 2014-06-26.
@@ -20,7 +20,7 @@
 #import <Cordova/CDVPlugin.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "nativeaudio-asset.h"
+#import "NativeAudioAsset.h"
 
 @interface NativeAudio : CDVPlugin {
     NSMutableDictionary* audioMapping; 

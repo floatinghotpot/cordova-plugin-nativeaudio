@@ -9,11 +9,12 @@ Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gami
 
 1. [Description](#description)
 2. [Roadmap](#roadmap)
-3. [History](#history)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [API](#api)
-7. [Demo](#demo)
+3. [Support](#support)
+4. [History](#history)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [API](#api)
+8. [Demo](#demo)
 
 =======================
 
@@ -21,19 +22,29 @@ Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gami
 
 This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playback), polyphony (multi-voice playback) and minimized latency (via caching) in audio-based applications, by leveraging native audio APIs. Designed for the use in HTML5-based cross-platform games and mobile/hybrid audio applications.
 
-Community-driven fork of the Low Latency Audio Plugin by Andrew Trice.
-
 =======================
-##Roadmap
+## Roadmap
 
+### Next Steps
+* add rich feedback / callback API to Android
+* adapt as ngCordova module using Kris Kowal's $q
+
+### Perspective
 Following the Cordova philosophy, this is a "shim" for a web audio implementation (on mobile) which is as fast and feature-rich as the native APIs. Currently, neither the established HTML5 Audio or the new Web Audio API a cross-platform solution for mobile which supports for polyphony, concurrency and maintains a low overhead (without resorting to fallbacks such as Flash).
-
 Should be replaced by a standardised W3C solution as soon as it practical implementation offers comparable performance across devices.
+
+
+==============================================
+##Support
+
+* iOS, tested (6.1, 7.1.2)
+* Android, tested (4+)
 
 =======================
 ##History
 
 Community-driven, clean fork of the Low Latency Audio Plugin for Cordova & PhoneGap, initially published by Andrew Trice and maintained by Raymond Xie.
+This version cleans up a lot of legacy code, adds success and failure callbacks for all functions, and will be available as a [ngCordova](http://www.ngcordova.com) module for the [Ionic Framework](http://www.ionicframework.com).
 
 =======================
 ##Installation
@@ -142,46 +153,46 @@ Unloads an audio file from memory.
 In this example, the resources reside in a relative path under the Cordova root folder "www/".
 
 ```javascript
-if( window.plugins && window.plugins.nativeaudio ) {
+if( window.plugins && window.plugins.NativeAudio ) {
 	
 	// Preload audio resources
-	window.plugins.nativeaudio.preloadComplex( 'music', 'audio/music.mp3', 1, 1, function(msg){
+	window.plugins.NativeAudio.preloadComplex( 'music', 'audio/music.mp3', 1, 1, function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
 	
-	window.plugins.nativeaudio.preloadSimple( 'click', 'audio/click.mp3', function(msg){
+	window.plugins.NativeAudio.preloadSimple( 'click', 'audio/click.mp3', function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
 
 
 	// Play
-	window.plugins.nativeaudio.play( 'click' );
-	window.plugins.nativeaudio.loop( 'music' );
+	window.plugins.NativeAudio.play( 'click' );
+	window.plugins.NativeAudio.loop( 'music' );
 
 
 	// Stop multichannel clip after 60 seconds
 	window.setTimeout( function(){
 
-		window.plugins.nativeaudio.stop( 'music' );
+		window.plugins.NativeAudio.stop( 'music' );
 			
-		window.plugins.nativeaudio.unload( 'music' );
-		window.plugins.nativeaudio.unload( 'click' );
+		window.plugins.NativeAudio.unload( 'music' );
+		window.plugins.NativeAudio.unload( 'click' );
 
 	}, 1000 * 60 );
 }
 ```
 
 =======================
-## Demo
-The demonstration projects in the examples directory can get you started with the plugin.
+## Example: Drumpad
+The demo drumpad in the examples directory is a first starting point.
 
 ```bash
 cordova create drumpad com.example.nativeaudio drumpad
 cd drumpad
 cordova platform add ios
-cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
+cordova plugin add de.neofonie.cordova.plugin.nativeaudio
 rm -R www/*
 cp -r plugins/de.neofonie.cordova.plugin.nativeaudio/examples/drumpad/* www
 cordova build ios

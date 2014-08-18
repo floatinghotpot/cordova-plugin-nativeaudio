@@ -1,5 +1,5 @@
 //
-//  nativeaudio-asset-complex.java
+//  NativeAudioAssetComplex.java
 //
 //  Created by Sidney Bofah on 2014-06-26.
 //

@@ -23,30 +23,33 @@ var exec = require('cordova/exec');
 
 module.exports  = {
 
-    preloadSimple: function(id, assetPath, success, errorCallback) {
-        return cordova.exec(success, errorCallback, "nativeaudio", "preloadSimple", [id, assetPath]);
+    preloadSimple: function(id, assetPath, successCallback, errorCallback) {
+
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadSimple", [id, assetPath]);
     },
     
-    preloadComplex: function(id, assetPath, volume, voices, success, errorCallback) {
+    preloadComplex: function(id, assetPath, volume, voices, successCallback, errorCallback) {
+
+        // Set voices and volume to defaults if not supplied
         if (voices === undefined) voices = 1;
         if (volume === undefined) volume = 1.0;
 2
-        return cordova.exec(success, errorCallback, "nativeaudio", "preloadComplex", [id, assetPath, volume, voices]);
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadComplex", [id, assetPath, volume, voices]);
     },
 
-    play: function(id, success, errorCallback) {
-        return cordova.exec(success, errorCallback, "nativeaudio", "play", [id]);
+    play: function(id, successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "play", [id]);
     },
 
-    stop: function(id, success, errorCallback) {
-        return cordova.exec(success, errorCallback, "nativeaudio", "stop", [id]);
+    stop: function(id, successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "stop", [id]);
     },
 
-    loop: function(id, success, errorCallback) {
-        return cordova.exec(success, errorCallback, "nativeaudio", "loop", [id]);
+    loop: function(id, successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "loop", [id]);
     },
 
-    unload: function(id, success, errorCallback) {
-        return cordova.exec(success, errorCallback, "nativeaudio", "unload", [id]);
+    unload: function(id, successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "unload", [id]);
     }
 };

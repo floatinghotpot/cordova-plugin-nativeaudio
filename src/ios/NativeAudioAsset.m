@@ -1,5 +1,5 @@
 //
-//  nativeaudio-asset.m
+//  NativeAudioAsset.m
 //  NativeAudioAsset
 //
 //  Created by Sidney Bofah on 2014-06-26.
@@ -16,7 +16,7 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "nativeaudio-asset.h"
+#import "NativeAudioAsset.h"
 
 @implementation NativeAudioAsset
 
