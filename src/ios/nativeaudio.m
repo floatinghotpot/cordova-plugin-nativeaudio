@@ -34,15 +34,19 @@ NSString* INFO_PLAYBACK_LOOP = @"(NATIVE AUDIO) Loop.";
 
 - (void)pluginInitialize
 {
-    // Set up Audio so that user can play own music
+
     AudioSessionInitialize(NULL, NULL, nil , nil);
     AVAudioSession *session = [AVAudioSession sharedInstance];
 
     NSError *setCategoryError = nil;
+
+    // Allows the application to mix its audio with audio from other apps.
     if (![session setCategory:AVAudioSessionCategoryPlayback
                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                         error:&setCategoryError]) {
-    // Handle Error
+
+        NSLog (@"Error setting audio session category.");
+        return;
     }
 
     [session setActive: YES error: nil];
