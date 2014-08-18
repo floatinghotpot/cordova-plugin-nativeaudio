@@ -183,7 +183,7 @@ cd drumpad
 cordova platform add ios
 cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
 rm -R www/*
-cp -r plugins/org.apache.cordova.nativeaudio/examples/drumpad www
+cp -r plugins/de.neofonie.cordova.plugin.nativeaudio/examples/drumpad/* www
 cordova build ios
 cordova emulate ios
 ```
