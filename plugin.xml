@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    id="org.apache.cordova.nativeaudio"
-    version="2.0.0">
 
-    <name>cordova-nativeaudio</name>
-    <author></author>
-	<description>Cordova & PhoneGap 3.5+ extensions for realtime, low-latency/high-performance & multichannel audio in HTML5 games and audio apps.</description>
-    
-	<license>MIT</license>
-	<keywords>audio,music,games</keywords>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="org.apache.cordova.nativeaudio"
+        version="2.0.0">
+
+    <name>NativeAudio</name>
+    <description>Cordova Native Audio Plugin</description>
+    <license>MIT</license>
+    <keywords>audio,music,games</keywords>
     <repo>https://github.com/sidneys/cordova-plugin-nativeaudio.git</repo>
     <issue>https://github.com/sidneys/cordova-plugin-nativeaudio/issues</issue>
 
-	<engines>
-	    <engine name="cordova" version=">=3.5" />
-	</engines>
+    <engines>
+        <engine name="cordova" version=">=3.5"/>
+    </engines>
 
     <js-module src="www/nativeaudio.js" name="nativeaudio">
-        <clobbers target="window.plugins.nativeaudio" />
+        <clobbers target="window.plugins.nativeaudio"/>
     </js-module>
 
     <!-- android -->
@@ -30,37 +28,37 @@
             </feature>
         </config-file>
 
-        <source-file src="src/android/nativeaudio.java" target-dir="src/org/apache/cordova/nativeaudio" />
-        <source-file src="src/android/nativeaudio-asset.java" target-dir="src/org/apache/cordova/nativeaudio" />
-        <source-file src="src/android/nativeaudio-complex.java" target-dir="src/org/apache/cordova/nativeaudio" />
+        <source-file src="src/android/nativeaudio.java" target-dir="src/org/apache/cordova/nativeaudio"/>
+        <source-file src="src/android/nativeaudio-asset.java" target-dir="src/org/apache/cordova/nativeaudio"/>
+        <source-file src="src/android/nativeaudio-complex.java" target-dir="src/org/apache/cordova/nativeaudio"/>
 
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
         </config-file>
-        
-     </platform>
-     
-     <!-- ios -->
-     <platform name="ios">
-         
-         <config-file target="config.xml" parent="/*">
-             <feature name="NativeAudio">
-                 <param name="ios-package" value="NativeAudio" />
-             </feature>
-         </config-file>
-         
-         <framework src="Foundation.framework" />
-         <framework src="AVFoundation.framework" />
-         <framework src="AudioToolbox.framework" /> 
-         
-         <header-file src="src/ios/nativeaudio.h" />
-         <source-file src="src/ios/nativeaudio.m" />
-         
-         <header-file src="src/ios/nativeaudio-asset.h" />
-         <source-file src="src/ios/nativeaudio-asset.m" />
-       
-	</platform>
-          
+
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="NativeAudio">
+                <param name="ios-package" value="NativeAudio"/>
+            </feature>
+        </config-file>
+
+        <framework src="Foundation.framework"/>
+        <framework src="AVFoundation.framework"/>
+        <framework src="AudioToolbox.framework"/>
+
+        <header-file src="src/ios/nativeaudio.h"/>
+        <source-file src="src/ios/nativeaudio.m"/>
+
+        <header-file src="src/ios/nativeaudio-asset.h"/>
+        <source-file src="src/ios/nativeaudio-asset.m"/>
+
+    </platform>
+
 </plugin>
