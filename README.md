@@ -171,8 +171,12 @@ if( window.plugins && window.plugins.nativeaudio ) {
 The demonstration projects in the examples directory can get you started with the plugin.
 
 ```bash
-cordova create Drumpad com.example.nativeaudio Drumpad
-cd Drumpad
+cordova create drumpad com.example.nativeaudio drumpad
+cd drumpad
 cordova platform add ios
 cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
+rm -R www/*
+cp -r plugins/org.apache.cordova.nativeaudio/examples/drumpad www
+cordova build ios
+cordova emulate ios
 ```
