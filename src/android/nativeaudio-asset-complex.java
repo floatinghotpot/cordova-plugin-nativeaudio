@@ -15,7 +15,7 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-package org.apache.cordova.nativeaudio;
+package de.neofonie.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 

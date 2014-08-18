@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="org.apache.cordova.nativeaudio"
+        id="de.neofonie.cordova.plugin.nativeaudio"
         version="2.0.0">
 
-    <name>NativeAudio</name>
-    <description>Cordova Native Audio Plugin</description>
+    <name>Cordova Native Audio</name>
+    <description>Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gaming and audio applications which require minimum latency, polyphony and concurrency.
+        Community-driven fork of the Low Latency Audio Plugin.</description>
     <license>MIT</license>
     <keywords>audio,music,games</keywords>
     <repo>https://github.com/sidneys/cordova-plugin-nativeaudio.git</repo>
@@ -23,14 +24,14 @@
     <platform name="android">
         
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="NativAaudio">
-                <param name="android-package" value="org.apache.cordova.nativeaudio"/>
+            <feature name="NativeAudio">
+                <param name="android-package" value="de.neofonie.cordova.plugin.nativeaudio"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/nativeaudio.java" target-dir="src/org/apache/cordova/nativeaudio"/>
-        <source-file src="src/android/nativeaudio-asset.java" target-dir="src/org/apache/cordova/nativeaudio"/>
-        <source-file src="src/android/nativeaudio-complex.java" target-dir="src/org/apache/cordova/nativeaudio"/>
+        <source-file src="src/android/nativeaudio.java" target-dir="de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/nativeaudio-asset.java" target-dir="de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/nativeaudio-complex.java" target-dir="de/neofonie/cordova/plugin/nativeaudio"/>
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>

@@ -1,10 +1,11 @@
 #Cordova Native Audio Plugin
 =======================
 
-Cordova plugin for native audio playback for the usage in HTML5 games & audio applications.
-Community-driven fork of the Low Latency Audio Plugin.
+Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gaming and audio applications which require minimum latency, polyphony and concurrency.
 
-## Index
+=======================
+
+## Contents
 
 1. [Description](#description)
 2. [Roadmap](#roadmap)
@@ -14,38 +15,42 @@ Community-driven fork of the Low Latency Audio Plugin.
 6. [API](#api)
 7. [Demo](#demo)
 
+=======================
+
 ##Description
 
-Cordova plugin for concurrent (multi-channel), polyphonic (multi-voice) and latency-reduced (caching) audio playback. Designed for usage in HTML5 games and hybrid audio applications.
+This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playback), polyphony (multi-voice playback) and minimized latency (via caching) in audio-based applications, by leveraging native audio APIs. Designed for the use in HTML5-based cross-platform games and mobile/hybrid audio applications.
 
+Community-driven fork of the Low Latency Audio Plugin by Andrew Trice.
 
+=======================
 ##Roadmap
 
-Following the Cordova core philosophy, this is a "shim" for a mobile web audio solution which is as fast and feature-rich as the native APIs.On mobile, neither the Web Audio API or HTML5 Audio offer fast cross-platform solutions with support for polyphony and concurrency.
+Following the Cordova philosophy, this is a "shim" for a web audio implementation (on mobile) which is as fast and feature-rich as the native APIs. Currently, neither the established HTML5 Audio or the new Web Audio API a cross-platform solution for mobile which supports for polyphony, concurrency and maintains a low overhead (without resorting to fallbacks such as Flash).
 
-Should be replaced by a W3C solution as soon as it offers comparable performance across devices.
+Should be replaced by a standardised W3C solution as soon as it practical implementation offers comparable performance across devices.
 
-
+=======================
 ##History
 
-Community-driven, clean fork of the Low Latency Audio Plugin for Cordova & PhoneGap, initially published by Andrew Trice and maintained by R. Xie.
+Community-driven, clean fork of the Low Latency Audio Plugin for Cordova & PhoneGap, initially published by Andrew Trice and maintained by Raymond Xie.
 
-
+=======================
 ##Installation
 
 Via Cordova CLI:
 ```bash
 cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
 ```
-
+=======================
 ##Usage
 
-1. Wait for device ready.
-1. Preload an audio asset, either optimized for short clips (up to 5 seconds) or ambient background audio (multichannel)
-2. Play the audio asset.
-3. Unload the audio asset.
+1. Wait for `deviceReady`.
+1. Preload an audio asset and assign an id - either optimized for single-shot style short clips (`preloadSimple()`) or looping, ambient background audio (`preloadComplex()`)
+2. `play()` the audio asset via its id.
+3. `unload()` the audio asset via its id.
 
-
+=======================
 ##API
 ```javascript
 preloadSimple: function ( id, assetPath, success, fail)
@@ -57,7 +62,7 @@ Uses lower-level native APIs with small footprint (iOS: AudioToolbox/AudioServic
 Fully concurrent and multichannel.
 
 * params
- * ID - string unique ID for the audio file
+ * id - string unique ID for the audio file
  * assetPath - the relative path or absolute URL (inluding http://) to the audio asset.
  * success - success callback function
  * fail - error/fail callback function
@@ -72,15 +77,15 @@ Can be stopped / looped.
 
 Uses higher-level native APIs with a larger footprint. (iOS: AVAudioPlayer).
 
-###Voices
+####Voices
 By default, there is 1 voice, that is: one instance that will be stopped & restarted on play().
 If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio.
 
-###Volume
+####Volume
 The default volume is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
 
 * params
- * ID - string unique ID for the audio file
+ * id - string unique ID for the audio file
  * assetPath - the relative path to the audio asset within the www directory
  * volume - the volume of the preloaded sound (0.1 to 1.0)
  * voices - the number of multichannel voices available
@@ -94,7 +99,7 @@ play: function (id, success, fail)
 Plays an audio asset.
 
 * params:
- * ID - string unique ID for the audio file
+ * id - string unique ID for the audio file
  * success - success callback function
  * fail - error/fail callback function
 
@@ -130,7 +135,8 @@ Unloads an audio file from memory.
  * ID - string unique ID for the audio file
  * success - success callback function
  * fail - error/fail callback function
-	
+
+=======================
 ##Example
 
 In this example, the resources reside in a relative path under the Cordova root folder "www/".
@@ -167,6 +173,7 @@ if( window.plugins && window.plugins.nativeaudio ) {
 }
 ```
 
+=======================
 ## Demo
 The demonstration projects in the examples directory can get you started with the plugin.
 

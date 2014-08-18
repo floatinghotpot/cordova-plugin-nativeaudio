@@ -11,7 +11,7 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.cordova.plugin;
+package de.neofonie.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.ArrayList;
