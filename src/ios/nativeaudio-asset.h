@@ -1,10 +1,10 @@
 //
-//  LowLatencyAudioAsset.h
-//  LowLatencyAudioAsset
+//  nativeaudio-asset.m
+//  NativeAudioAsset
 //
-//  Created by Andrew Trice on 1/23/12.
+//  Created by Sidney Bofah on 2014-06-26.
 //
-// THIS SOFTWARE IS PROVIDED BY ANDREW TRICE "AS IS" AND ANY EXPRESS OR
+// THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR
 // IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
 // EVENT SHALL ANDREW TRICE OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
@@ -21,7 +21,7 @@
 #import <AVFoundation/AVAudioPlayer.h>
 
 
-@interface LowLatencyAudioAsset : NSObject {
+@interface NativeAudioAsset : NSObject {
     NSMutableArray* voices;
     int playIndex;
 }

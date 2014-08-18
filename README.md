@@ -1,58 +1,59 @@
-#Cordova Low Latency Audio Plugin for iOS and Android
+#Cordova Native Audio Plugin
 =======================
 
-Prerequisites: A Cordova/PhoneGap 3.0+ project for iOS or Android.
+Cordova/PhoneGap 3.0+ project for iOS or Android.
 
 ## Index
 
 1. [Description](#description)
-2. [Installation](#installation)
+2. [Instawindow.plugins.nativeaudiotion](#instawindow.plugins.nativeaudiotion)
 3. [Usage](#usage)
 4. [API Methods](#api-methods)
 5. [Example](#example)
 6. [Demo Projects](#demo-projects)
 7. [Credits](#credits)
+
 ##Description
 
-The low latency audio plugin is designed to enable low latency and polyphonic/background audio from Cordova/PhoneGap applications.
+Audio extension for concurrent (multi-channel), polyphonic (multi-voice) and latency-reduced (caching) audio playback, designed for games and audio applications.
 
-It was orginally developed by Andrew Trice, you can read more about this plugin at:
-http://www.tricedesigns.com/2012/01/25/low-latency-polyphonic-audio-in-phonegap/
 
-##Installation
+##Roadmap
 
-To install this plugin, follow the [Command-line Interface Guide](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface).
+Following the Cordova core philosophy, this is a "shim" for a mobile web audio solution which is as fast and feature-rich as the native APIs.
+On mobile, neither the Web Audio API or HTML5 Audio offer fast cross-platform solutions with support for polyphony and concurrency.
+Should be replaced by a W3C solution as soon as it offers comparable performance across devices.
 
-This plugin follows the Cordova 3.0 plugin spec, so it can be installed through the Cordova CLI in your existing Cordova project:
+
+##History
+
+Community-driven, clean fork of the Low Latency Audio Plugin for Cordova & PhoneGap, initially published by Andrew Trice and maintained by R. Xie.
+
+
+##Instawindow.plugins.nativeaudiotion
+
+Via Cordova CLI:
 ```bash
-cordova plugin add https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio.git
+cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
 ```
 
 ##Usage
 
-1. Preload the audio asset. You can use a relative path or absolute URL and set a lower volume.
-   Note: Make sure to wait for the "deviceready" event before attepting to load assets.
+1. Wait for device ready.
+1. Preload an audio asset, either optimized for short clips (up to 5 seconds) or ambient background audio (multichannel)
 2. Play the audio asset.
-3. When done, unload the audio asset.
-4. in hotjs-audio.js, the same interface also implemented for html5 audio, when code run in PC browser, it will use html5, when in cordova, it will use lowlatencyaudio plugin.  
+3. Unload the audio asset.
 
-```html
-<script src='plugins/hotjs-audio.js'></script>
-```
-```javascript
-function onDeviceReady() {
-    hotjs.Audio.init();
-
-    // in your code, replace 'window.plugins.xxx()' with 'hotjs.Audio.xxx()'
-}
-```
 
 ##API Methods
 ```javascript
-preloadFX: function ( id, assetPath, success, fail)
+preloadSimple: function ( id, assetPath, success, fail)
 ```
+Loads an audio file into memory. Optimized for short clips / single shots (up to five seconds).
+Cannot be stopped / looped.
 
-The preloadFX function loads an audio file into memory.  Assets that are loaded using preloadFX are managed/played using AudioServices methods from the AudioToolbox framework.   These are very low-level audio methods and have minimal overhead.  Audio loaded using this function is played using AudioServicesPlaySystemSound.   These assets should be short, and are not intended to be looped or stopped.   They are fully concurrent and polyphonic.
+Uses lower-level native APIs with small footprint (iOS: AudioToolbox/AudioServices).
+Fully concurrent and multichannel.
 
 * params
  * ID - string unique ID for the audio file
@@ -60,17 +61,26 @@ The preloadFX function loads an audio file into memory.  Assets that are loaded 
  * success - success callback function
  * fail - error/fail callback function
 
+
 ```javascript
-preloadAudio: function ( id, assetPath, volume, voices, success, fail)
+preloadComplex: function ( id, assetPath, volume, voices, success, fail)
 ```
 
-The preloadAudio function loads an audio file into memory.  Assets that are loaded using preloadAudio are managed/played using AVAudioPlayer.   These have more overhead than assets laoded via preloadFX, and can be looped/stopped.   By default, there is a single "voice" - only one instance that will be stopped & restarted when you hit play.  If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio. The default volume is for a preloaded sound is 1.0, a lower default volume can be preset by using a numerical value from 0.1 to 1.0.
+Loads an audio file into memory. Optimized for background music / ambient sound.
+Can be stopped / looped.
+
+Uses higher-level native APIs with a larger footprint. (iOS: AVAudioPlayer).
+
+Voices: By default, there is 1 voice, that is: one instance that will be stopped & restarted on play().
+If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio.
+
+Volume: The default volume is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
 
 * params
  * ID - string unique ID for the audio file
  * assetPath - the relative path to the audio asset within the www directory
  * volume - the volume of the preloaded sound (0.1 to 1.0)
- * voices - the number of polyphonic voices available
+ * voices - the number of multichannel voices available
  * success - success callback function
  * fail - error/fail callback function
 
@@ -88,7 +98,7 @@ Plays an audio asset.
 ```javascript
 loop: function (id, success, fail)
 ```
-Loops an audio asset infinitely - this only works for assets loaded via preloadAudio.
+Loops an audio asset infinitely - this only works for assets loaded via preloadComplex.
 
 * params
  * ID - string unique ID for the audio file
@@ -99,7 +109,7 @@ Loops an audio asset infinitely - this only works for assets loaded via preloadA
 stop: function (id, success, fail)
 ```
 
-Stops an audio file - this only works for assets loaded via preloadAudio.
+Stops an audio file. Only works for assets loaded via preloadComplex.
 
 * params:
  * ID - string unique ID for the audio file
@@ -111,6 +121,8 @@ unload: function (id, success, fail)
 ```
 
 Unloads an audio file from memory.
+
+
 * params:
  * ID - string unique ID for the audio file
  * success - success callback function
@@ -119,62 +131,45 @@ Unloads an audio file from memory.
 ##Example
 
 In this example, the resources reside in a relative path under the Cordova root folder "www/".
-For example, if the file is under "www/audio/music.mp3", then:
 
 ```javascript
-// map the media id and res file
-var media = {
-	'music': 'audio/music.mp3',
-	'click': 'audio/click.mp3'
-};
-```
-
-The implementation goes as follows:
-
-```javascript
-if( window.plugins && window.plugins.LowLatencyAudio ) {
-	var lla = window.plugins.LowLatencyAudio;
+if( window.plugins && window.plugins.nativeaudio ) {
 	
-	// preload audio resource
-	lla.preloadAudio( 'music', media['music'], 1, 1, function(msg){
+	// Preload audio resources
+	window.plugins.nativeaudio.preloadComplex( 'music', 'audio/music.mp3', 1, 1, function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
 	
-	lla.preloadFX( 'click', media['click'], function(msg){
+	window.plugins.nativeaudio.preloadSimple( 'click', 'audio/click.mp3', function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
-	
-	// now start playing
-	lla.play( 'click' );
-	lla.loop( 'music' );
 
-	// stop after 1 min	
+
+	// Play
+	window.plugins.nativeaudio.play( 'click' );
+	window.plugins.nativeaudio.loop( 'music' );
+
+
+	// Stop multichannel clip after 60 seconds
 	window.setTimeout( function(){
-		//lla.stop( 'click' );
-		lla.stop( 'music' );
+
+		window.plugins.nativeaudio.stop( 'music' );
 			
-		lla.unload( 'music' );
-		lla.unload( 'click' );
+		window.plugins.nativeaudio.unload( 'music' );
+		window.plugins.nativeaudio.unload( 'click' );
+
 	}, 1000 * 60 );
 }
 ```
 
-## Demo Projects
+## Demo
 The demonstration projects in the examples directory can get you started with the plugin.
 
-Start by creating a project. Then replace index.html with the one in the example directory and copy the assets folder into the /www/ directory.
-
 ```bash
-cordova create Piano com.example.piano Piano
-cd Piano
+cordova create Drumpad com.example.nativeaudio Drumpad
+cd Drumpad
 cordova platform add ios
-cordova plugin add https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio.git
+cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
 ```
-
-## Credits
-
-The first iteration of the Plugin was built by [Andrew Trice](https://github.com/triceam/LowLatencyAudio).
-This plugin was ported to Plugman / Cordova 3 by [Raymond Xie](https://github.com/floatinghotpot), [SidneyS](https://github.com/sidneys) and other committers.
-

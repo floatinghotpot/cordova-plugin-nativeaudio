@@ -11,35 +11,35 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.rjfun.cordova.plugin;
+package com.cordova.plugin;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.res.AssetFileDescriptor;
 
-public class LowLatencyAudioAsset {
+public class NativeAudioAsset {
 
-	private ArrayList<PolyphonicVoice> voices;
+	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 	
-	public LowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
+	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
 	{
-		voices = new ArrayList<PolyphonicVoice>();
+		voices = new ArrayList<NativeAudioAssetComplex>();
 		
 		if ( numVoices < 0 )
 			numVoices = 0;
 		
 		for ( int x=0; x<numVoices; x++) 
 		{
-			PolyphonicVoice voice = new PolyphonicVoice(afd, volume);
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(afd, volume);
 			voices.add( voice );
 		}
 	}
 	
 	public void play() throws IOException
 	{
-		PolyphonicVoice voice = voices.get(playIndex);
+		NativeAudioAssetComplex voice = voices.get(playIndex);
 		voice.play();
 		playIndex++;
 		playIndex = playIndex % voices.size();
@@ -49,14 +49,14 @@ public class LowLatencyAudioAsset {
 	{
 		for ( int x=0; x<voices.size(); x++) 
 		{
-			PolyphonicVoice voice = voices.get(x);
+			NativeAudioAssetComplex voice = voices.get(x);
 			voice.stop();
 		}
 	}
 	
 	public void loop() throws IOException
 	{
-		PolyphonicVoice voice = voices.get(playIndex);
+		NativeAudioAssetComplex voice = voices.get(playIndex);
 		voice.loop();
 		playIndex++;
 		playIndex = playIndex % voices.size();
@@ -67,7 +67,7 @@ public class LowLatencyAudioAsset {
 		this.stop();
 		for ( int x=0; x<voices.size(); x++) 
 		{
-			PolyphonicVoice voice = voices.get(x);
+			NativeAudioAssetComplex voice = voices.get(x);
 			voice.unload();
 		}
 		voices.removeAll(voices);

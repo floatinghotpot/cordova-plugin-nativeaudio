@@ -1,17 +1,21 @@
-/*
-THIS SOFTWARE IS PROVIDED BY ANDREW TRICE "AS IS" AND ANY EXPRESS OR
-IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-EVENT SHALL ANDREW TRICE OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+//
+//  nativeaudio.java
+//
+//  Created by Sidney Bofah on 2014-06-26.
+//
+// THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR
+// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+// EVENT SHALL ANDREW TRICE OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
 
-package com.rjfun.cordova.plugin;
+package com.cordova.plugin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,13 +40,13 @@ import org.apache.cordova.PluginResult.Status;
  * @author Andrew Trice
  *
  */
-public class LowLatencyAudio extends CordovaPlugin {
+public class NativeAudio extends CordovaPlugin {
 
 	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
 	public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id.";
 	
-	public static final String PRELOAD_FX="preloadFX";
-	public static final String PRELOAD_AUDIO="preloadAudio";
+	public static final String PRELOAD_SIMPLE="preloadSimple";
+	public static final String PRELOAD_COMPLEX="preloadComplex";
 	public static final String PLAY="play";
 	public static final String STOP="stop";
 	public static final String LOOP="loop";
@@ -50,10 +54,10 @@ public class LowLatencyAudio extends CordovaPlugin {
 	
 	public static final int DEFAULT_POLYPHONY_VOICES = 15;
 	
-	private static final String LOGTAG = "LowLatencyAudio";
+	private static final String LOGTAG = "NativeAudio";
 	
 	private static SoundPool soundPool;
-	private static HashMap<String, LowLatencyAudioAsset> assetMap; 
+	private static HashMap<String, NativeAudioAsset> assetMap; 
 	private static HashMap<String, Integer> soundMap; 
 	private static HashMap<String, ArrayList<Integer>> streamMap; 
 	
@@ -65,7 +69,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 				String assetPath = data.getString(1);
 				String fullPath = "www/".concat(assetPath);
 				
-				Log.d(LOGTAG, "preloadFX - " + audioID + ": " + assetPath);
+				Log.d(LOGTAG, "preloadSimple - " + audioID + ": " + assetPath);
 
 				Context ctx = cordova.getActivity().getApplicationContext();
 				AssetManager am = ctx.getResources().getAssets();
@@ -90,7 +94,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
 				String assetPath = data.getString(1);
-				Log.d(LOGTAG, "preloadAudio - " + audioID + ": " + assetPath);
+				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
 				
 				double volume;
 				if (data.length() < 2) {
@@ -112,7 +116,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 				AssetManager am = ctx.getResources().getAssets();
 				AssetFileDescriptor afd = am.openFd(fullPath);
 
-				LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
+				NativeAudioAsset asset = new NativeAudioAsset(
 						afd, voices, (float)volume);
 				assetMap.put(audioID, asset);
 
@@ -134,7 +138,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 			//Log.d( LOGTAG, "play - " + audioID );
 
 			if (assetMap.containsKey(audioID)) {
-				LowLatencyAudioAsset asset = assetMap.get(audioID);
+				NativeAudioAsset asset = assetMap.get(audioID);
 				if (LOOP.equals(action))
 					asset.loop();
 				else
@@ -173,7 +177,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 			//Log.d( LOGTAG, "stop - " + audioID );
 			
 			if (assetMap.containsKey(audioID)) {
-				LowLatencyAudioAsset asset = assetMap.get(audioID);
+				NativeAudioAsset asset = assetMap.get(audioID);
 				asset.stop();
 			} else if (soundMap.containsKey(audioID)) {
 				ArrayList<Integer> streams = streamMap.get(audioID);
@@ -201,7 +205,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 			Log.d( LOGTAG, "unload - " + audioID );
 			
 			if (assetMap.containsKey(audioID)) {
-				LowLatencyAudioAsset asset = assetMap.get(audioID);
+				NativeAudioAsset asset = assetMap.get(audioID);
 				asset.unload();
 				assetMap.remove(audioID);
 			} else if (soundMap.containsKey(audioID)) {
@@ -229,14 +233,14 @@ public class LowLatencyAudio extends CordovaPlugin {
 		initSoundPool();
 		
 		try {
-			if (PRELOAD_FX.equals(action)) {
+			if (PRELOAD_SIMPLE.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
 		            	callbackContext.sendPluginResult( executePreloadFX(data) );
 		            }
 		        });				
 				
-			} else if (PRELOAD_AUDIO.equals(action)) {
+			} else if (PRELOAD_COMPLEX.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
 		            	callbackContext.sendPluginResult( executePreloadAudio(data) );
@@ -291,7 +295,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 		}
 
 		if (assetMap == null) {
-			assetMap = new HashMap<String, LowLatencyAudioAsset>();
+			assetMap = new HashMap<String, NativeAudioAsset>();
 		}
 	}
 }

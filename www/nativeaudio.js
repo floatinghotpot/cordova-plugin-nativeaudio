@@ -23,30 +23,30 @@ var exec = require('cordova/exec');
 
 module.exports  = {
 
-    preloadFX: function(id, assetPath, success, fail) {
-        return cordova.exec(success, fail, "LowLatencyAudio", "preloadFX", [id, assetPath]);
+    preloadSimple: function(id, assetPath, success, errorCallback) {
+        return cordova.exec(success, errorCallback, "nativeaudio", "preloadSimple", [id, assetPath]);
     },
-
-    preloadAudio: function(id, assetPath, volume, voices, success, fail) {
+    
+    preloadComplex: function(id, assetPath, volume, voices, success, errorCallback) {
         if (voices === undefined) voices = 1;
         if (volume === undefined) volume = 1.0;
-
-        return cordova.exec(success, fail, "LowLatencyAudio", "preloadAudio", [id, assetPath, volume, voices]);
+2
+        return cordova.exec(success, errorCallback, "nativeaudio", "preloadComplex", [id, assetPath, volume, voices]);
     },
 
-    play: function(id, success, fail) {
-        return cordova.exec(success, fail, "LowLatencyAudio", "play", [id]);
+    play: function(id, success, errorCallback) {
+        return cordova.exec(success, errorCallback, "nativeaudio", "play", [id]);
     },
 
-    stop: function(id, success, fail) {
-        return cordova.exec(success, fail, "LowLatencyAudio", "stop", [id]);
+    stop: function(id, success, errorCallback) {
+        return cordova.exec(success, errorCallback, "nativeaudio", "stop", [id]);
     },
 
-    loop: function(id, success, fail) {
-        return cordova.exec(success, fail, "LowLatencyAudio", "loop", [id]);
+    loop: function(id, success, errorCallback) {
+        return cordova.exec(success, errorCallback, "nativeaudio", "loop", [id]);
     },
 
-    unload: function(id, success, fail) {
-        return cordova.exec(success, fail, "LowLatencyAudio", "unload", [id]);
+    unload: function(id, success, errorCallback) {
+        return cordova.exec(success, errorCallback, "nativeaudio", "unload", [id]);
     }
 };

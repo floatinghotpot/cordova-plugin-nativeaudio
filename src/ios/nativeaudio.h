@@ -1,10 +1,10 @@
 //
-//  LowLatencyAudio.h
-//  LowLatencyAudio
+//  nativeaudio.h
+//  NativeAudio
 //
-//  Created by Andrew Trice on 1/19/12.
+//  Created by Sidney Bofah on 2014-06-26.
 //
-// THIS SOFTWARE IS PROVIDED BY ANDREW TRICE "AS IS" AND ANY EXPRESS OR
+// THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR
 // IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
 // MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
 // EVENT SHALL ANDREW TRICE OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
@@ -20,15 +20,15 @@
 #import <Cordova/CDVPlugin.h>
 #import <AVFoundation/AVAudioPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "LowLatencyAudioAsset.h"
+#import "nativeaudio-asset.h"
 
-@interface LowLatencyAudio : CDVPlugin {
+@interface NativeAudio : CDVPlugin {
     NSMutableDictionary* audioMapping; 
 }
 
 //Public Instance Methods (visible in Cordova API)
-- (void) preloadFX:(CDVInvokedUrlCommand *)command;
-- (void) preloadAudio:(CDVInvokedUrlCommand *)command;
+- (void) preloadSimple:(CDVInvokedUrlCommand *)command;
+- (void) preloadComplex:(CDVInvokedUrlCommand *)command;
 - (void) play:(CDVInvokedUrlCommand *)command;
 - (void) stop:(CDVInvokedUrlCommand *)command;
 - (void) loop:(CDVInvokedUrlCommand *)command;

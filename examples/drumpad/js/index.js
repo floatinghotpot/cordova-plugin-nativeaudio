@@ -39,19 +39,19 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         
-		if( window.plugins && window.plugins.LowLatencyAudio ) {
+		if( window.plugins && window.plugins.nativeaudio ) {
 
-			window.plugins.LowLatencyAudio.preloadFX('assets/bass.mp3', 'assets/bass.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('assets/snare.mp3', 'assets/snare.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('assets/highhat.mp3', 'assets/highhat.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('assets/bongo.mp3', 'assets/bongo.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });	    
+			window.plugins.nativeaudio.preloadSimple('assets/bass.mp3', 'assets/bass.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
+			window.plugins.nativeaudio.preloadSimple('assets/snare.mp3', 'assets/snare.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
+			window.plugins.nativeaudio.preloadSimple('assets/highhat.mp3', 'assets/highhat.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
+			window.plugins.nativeaudio.preloadSimple('assets/bongo.mp3', 'assets/bongo.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
 		}
 
     },
     
 	play: function(drum) {
 		document.getElementById(drum).className = 'drum touched';
-		window.plugins.LowLatencyAudio.play('assets/' + drum + '.mp3');
+		window.plugins.nativeaudio.play('assets/' + drum + '.mp3');
 	},
     
 	touchEnd: function(event) {
