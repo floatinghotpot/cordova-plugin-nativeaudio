@@ -12,7 +12,7 @@ var hotjs = hotjs || {};
 
         preloadFX: function(id, assetPath, success, fail) {
             var res = new Audio();
-            res.onload = success;
+            res.addEventListener('canplaythrough', success, false);
             res.onerror = fail;
             res.setAttribute('src', assetPath);
             res.load();
@@ -21,7 +21,7 @@ var hotjs = hotjs || {};
 
         preloadAudio: function(id, assetPath, volume, voices, success, fail) {
             var res = new Audio();
-            res.onload = success;
+            res.addEventListener('canplaythrough', success, false);
             res.onerror = fail;
             res.setAttribute('src', assetPath);
             res.load();

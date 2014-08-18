@@ -2,11 +2,11 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.rjfun.cordova.plugin.lowlatencyaudio"
-    version="1.1.3">
+    version="1.1.4">
       
     <name>LowLatencyAudio</name>
     <author>Andrew Trice, updated by Raymond Xie, etc.</author>
-	<description>Cordova/PhoneGap 3+ Plugin to support Low Latency and Polyphonic Audio Playback on Android and iOS, must have for mobile apps/games, as HTML5 audio in mobile browsers is really poor.</description>
+	<description>Cordova/PhoneGap 3+ Plugin to support Low Latency and Polyphonic Audio Playback on Android and iOS, must have for mobile apps/games, as HTML5 audio in mobile browsers is really poor. Also implemented same interface for HTML5 audio, useful when test in PC browser.</description>
     
 	<license>MIT</license>
 	<keywords>audio,fx,music,mp3,game</keywords>
