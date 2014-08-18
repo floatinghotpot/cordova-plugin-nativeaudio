@@ -7,10 +7,12 @@ Community-driven fork of the Low Latency Audio Plugin.
 ## Index
 
 1. [Description](#description)
-3. [Roadmap](#roadmap)
-4. [History](#history)
-5. [API](#api)
-6. [Demo](#demo)
+2. [Roadmap](#roadmap)
+3. [History](#history)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [API](#api)
+7. [Demo](#demo)
 
 ##Description
 
@@ -29,7 +31,7 @@ Should be replaced by a W3C solution as soon as it offers comparable performance
 Community-driven, clean fork of the Low Latency Audio Plugin for Cordova & PhoneGap, initially published by Andrew Trice and maintained by R. Xie.
 
 
-##Instawindow.plugins.nativeaudiotion
+##Installation
 
 Via Cordova CLI:
 ```bash
@@ -70,10 +72,12 @@ Can be stopped / looped.
 
 Uses higher-level native APIs with a larger footprint. (iOS: AVAudioPlayer).
 
-Voices: By default, there is 1 voice, that is: one instance that will be stopped & restarted on play().
+###Voices
+By default, there is 1 voice, that is: one instance that will be stopped & restarted on play().
 If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio.
 
-Volume: The default volume is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
+###Volume
+The default volume is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
 
 * params
  * ID - string unique ID for the audio file
