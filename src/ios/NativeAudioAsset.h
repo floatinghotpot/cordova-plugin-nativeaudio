@@ -31,4 +31,5 @@
 - (void) stop;
 - (void) loop;
 - (void) unload;
+- (void) setVolume:(NSNumber*) volume;
 @end

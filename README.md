@@ -64,7 +64,7 @@ cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
 =======================
 ##API
 ```javascript
-preloadSimple: function ( id, assetPath, success, fail)
+preloadSimple: function ( id, assetPath, successCallback, fail)
 ```
 Loads an audio file into memory. Optimized for short clips / single shots (up to five seconds).
 Cannot be stopped / looped.
@@ -75,12 +75,12 @@ Fully concurrent and multichannel.
 * params
  * id - string unique ID for the audio file
  * assetPath - the relative path or absolute URL (inluding http://) to the audio asset.
- * success - success callback function
- * fail - error/fail callback function
+ * successCallback - success callback function
+ * fail - error callback function
 
 
 ```javascript
-preloadComplex: function ( id, assetPath, volume, voices, success, fail)
+preloadComplex: function ( id, assetPath, volume, voices, successCallback, fail)
 ```
 
 Loads an audio file into memory. Optimized for background music / ambient sound.
@@ -100,43 +100,43 @@ The default volume is 1.0, a lower default can be set by using a numerical value
  * assetPath - the relative path to the audio asset within the www directory
  * volume - the volume of the preloaded sound (0.1 to 1.0)
  * voices - the number of multichannel voices available
- * success - success callback function
- * fail - error/fail callback function
+ * successCallback - success callback function
+ * errorCallback - error callback function
 
 ```javascript
-play: function (id, success, fail)
+play: function (id, successCallback, fail)
 ```
 
 Plays an audio asset.
 
 * params:
  * id - string unique ID for the audio file
- * success - success callback function
- * fail - error/fail callback function
+ * successCallback - success callback function
+ * errorCallback - error callback function
 
 ```javascript
-loop: function (id, success, fail)
+loop: function (id, successCallback, errorCallback)
 ```
 Loops an audio asset infinitely - this only works for assets loaded via preloadComplex.
 
 * params
  * ID - string unique ID for the audio file
- * success - success callback function
- * fail - error/fail callback function
+ * successCallback - success callback function
+ * errorCallback - error callback function
 
 ```javascript
-stop: function (id, success, fail)
+stop: function (id, successCallback, errorCallback)
 ```
 
 Stops an audio file. Only works for assets loaded via preloadComplex.
 
 * params:
  * ID - string unique ID for the audio file
- * success - success callback function
- * fail - error/fail callback function
+ * successCallback - success callback function
+ * errorCallback - error callback function
 
 ```javascript
-unload: function (id, success, fail)
+unload: function (id, successCallback, errorCallback)
 ```
 
 Unloads an audio file from memory.
@@ -144,8 +144,20 @@ Unloads an audio file from memory.
 
 * params:
  * ID - string unique ID for the audio file
- * success - success callback function
- * fail - error/fail callback function
+ * successCallback - success callback function
+ * errorCallback - error callback function
+ 
+ ```javascript
+setVolumeForComplexAsset: function (id, volume, successCallback, errorCallback)
+ ```
+ 
+Changes the volume for preloaded complex assets.
+ 
+ 
+* params:
+ * ID - string unique ID for the audio file
+ * successCallback - success callback function
+ * errorCallback - error callback function
 
 =======================
 ##Example

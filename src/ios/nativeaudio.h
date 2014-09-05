@@ -33,9 +33,6 @@
 - (void) stop:(CDVInvokedUrlCommand *)command;
 - (void) loop:(CDVInvokedUrlCommand *)command;
 - (void) unload:(CDVInvokedUrlCommand *)command;
-
-
-//Instance Methods  
-
+- (void) setVolumeForComplexAsset:(CDVInvokedUrlCommand *)command;
 
 @end
