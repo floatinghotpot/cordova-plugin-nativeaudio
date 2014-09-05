@@ -33,6 +33,7 @@
             player.volume = volume.floatValue;
             [player prepareToPlay];
             [voices addObject:player];
+            [player setDelegate:self];
         }
         
         playIndex = 0;
@@ -86,6 +87,26 @@
         AVAudioPlayer * player = [voices objectAtIndex:x];
 
         [player setVolume:volume.floatValue];
+    }
+}
+
+- (void) setCallbackAndId:(CompleteCallback)cb audioId:(NSString*)aID
+{
+    self->audioId = aID;
+    self->finished = cb;
+}
+
+- (void) audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    if (self->finished) {
+        self->finished(self->audioId);
+    }
+}
+
+- (void) audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
+{
+    if (self->finished) {
+        self->finished(self->audioId);
     }
 }
 
