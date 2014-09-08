@@ -18,6 +18,7 @@
 package de.neofonie.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
@@ -36,19 +37,23 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	
 	private MediaPlayer mp;
 	private int state;
-	
+    Callable<Void> completeCallback;
+
 	public NativeAudioAssetComplex( AssetFileDescriptor afd, float volume)  throws IOException
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
+        mp.setOnCompletionListener(this);
+        mp.setOnPreparedListener(this);
 		mp.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
 	
-	public void play() throws IOException
+	public void play(Callable<Void> completeCb) throws IOException
 	{
+        completeCallback = completeCb;
 		invokePlay( false );
 	}
 	
@@ -64,24 +69,44 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		}
 		if ( !playing && state == PREPARED )
 		{
-			state = PENDING_LOOP;
+			state = (loop ? PENDING_LOOP : PENDING_PLAY);
 			onPrepared( mp );
 		}
 		else if ( !playing )
 		{
-			state = PENDING_LOOP;
+			state = (loop ? PENDING_LOOP : PENDING_PLAY);
 			mp.setLooping(loop);
 			mp.start();
 		}
 	}
-	
-	public void stop() throws IOException
+
+    public boolean pause()
+    {
+        if ( mp.isLooping() || mp.isPlaying() )
+        {
+            mp.pause();
+            return true;
+        }
+        return false;
+    }
+
+    public void resume()
+    {
+        mp.start();
+    }
+
+    public void stop() throws IOException
 	{
 		if ( mp.isLooping() || mp.isPlaying() )
 		{
 			state = INVALID;
-			mp.pause();
-			mp.seekTo(0);
+			try {
+                mp.pause();
+                mp.seekTo(0);
+            }
+            catch (IllegalStateException e) {
+                // I don't know why this gets thrown; catch here to save app
+            }
 		}
 	}
 	
@@ -126,6 +151,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			this.state = INVALID;
 			try {
 				this.stop();
+                completeCallback.call();
 			}
 			catch (Exception e)
 			{

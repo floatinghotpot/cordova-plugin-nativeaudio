@@ -24,6 +24,7 @@
 
 @interface NativeAudio : CDVPlugin {
     NSMutableDictionary* audioMapping; 
+    NSMutableDictionary* completeCallbacks;
 }
 
 //Public Instance Methods (visible in Cordova API)
@@ -34,5 +35,6 @@
 - (void) loop:(CDVInvokedUrlCommand *)command;
 - (void) unload:(CDVInvokedUrlCommand *)command;
 - (void) setVolumeForComplexAsset:(CDVInvokedUrlCommand *)command;
+- (void) addCompleteListener:(CDVInvokedUrlCommand *)command;
 
 @end
