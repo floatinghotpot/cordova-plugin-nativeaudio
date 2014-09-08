@@ -50,7 +50,7 @@ var app = {
 
 
 
-            window.plugins.NativeAudio.play('assets/ambient.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
+            window.plugins.NativeAudio.play('assets/ambient.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); }, function(msg){ console.error( 'Complete: ' + msg ); });
         }
 
     },
