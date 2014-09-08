@@ -1,19 +1,9 @@
 //
+// 
 //  NativeAudioAsset.m
 //  NativeAudioAsset
 //
 //  Created by Sidney Bofah on 2014-06-26.
-//
-// THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR
-// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL ANDREW TRICE OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
 #import "NativeAudioAsset.h"
@@ -33,6 +23,7 @@
             player.volume = volume.floatValue;
             [player prepareToPlay];
             [voices addObject:player];
+            [player setDelegate:self];
         }
         
         playIndex = 0;
@@ -86,6 +77,26 @@
         AVAudioPlayer * player = [voices objectAtIndex:x];
 
         [player setVolume:volume.floatValue];
+    }
+}
+
+- (void) setCallbackAndId:(CompleteCallback)cb audioId:(NSString*)aID
+{
+    self->audioId = aID;
+    self->finished = cb;
+}
+
+- (void) audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    if (self->finished) {
+        self->finished(self->audioId);
+    }
+}
+
+- (void) audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
+{
+    if (self->finished) {
+        self->finished(self->audioId);
     }
 }
 
