@@ -27,7 +27,7 @@ This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playbac
 
 ### Next Steps
 * add rich feedback / callback API to Android
-* adapt as ngCordova module using Kris Kowal's $q
+* update ngCordova with newest API features
 
 ### Perspective
 Following the Cordova philosophy, this is a "shim" for a web audio implementation (on mobile) which is as fast and feature-rich as the native APIs. Currently, neither the established HTML5 Audio or the new Web Audio API a cross-platform solution for mobile which supports for polyphony, concurrency and maintains a low overhead (without resorting to fallbacks such as Flash).
@@ -146,16 +146,17 @@ Unloads an audio file from memory.
  * ID - string unique ID for the audio file
  * successCallback - success callback function
  * errorCallback - error callback function
- 
- ```javascript
+
+```javascript
 setVolumeForComplexAsset: function (id, volume, successCallback, errorCallback)
- ```
- 
+```
+
 Changes the volume for preloaded complex assets.
  
  
 * params:
  * ID - string unique ID for the audio file
+ * volume - the volume of the audio asset (0.1 to 1.0)
  * successCallback - success callback function
  * errorCallback - error callback function
 
