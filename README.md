@@ -119,7 +119,7 @@ The default volume is 1.0, a lower default can be set by using a numerical value
  * errorCallback - error callback function
 
 ```javascript
-play: function (id, successCallback, errorCallback)
+play: function (id, successCallback, errorCallback, completeCallback)
 ```
 
 Plays an audio asset.
