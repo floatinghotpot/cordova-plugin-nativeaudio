@@ -15,10 +15,11 @@ package de.neofonie.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import android.content.res.AssetFileDescriptor;
 
-public class NativeAudioAsset {
+public class NativeAudioAsset  {
 
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
@@ -28,7 +29,7 @@ public class NativeAudioAsset {
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
 		if ( numVoices < 0 )
-			numVoices = 0;
+			numVoices = 1;
 		
 		for ( int x=0; x<numVoices; x++) 
 		{
@@ -37,14 +38,32 @@ public class NativeAudioAsset {
 		}
 	}
 	
-	public void play() throws IOException
+	public void play(Callable<Void> completeCb) throws IOException
 	{
 		NativeAudioAssetComplex voice = voices.get(playIndex);
-		voice.play();
+		voice.play(completeCb);
 		playIndex++;
 		playIndex = playIndex % voices.size();
 	}
-	
+
+    public boolean pause()
+    {
+        boolean wasPlaying = false;
+        for ( int x=0; x<voices.size(); x++)
+        {
+            NativeAudioAssetComplex voice = voices.get(x);
+            wasPlaying |= voice.pause();
+        }
+        return wasPlaying;
+    }
+
+    public void resume()
+    {
+        // only resumes first instance, assume being used on a stream and not multiple sfx
+        NativeAudioAssetComplex voice = voices.get(0);
+        voice.resume();
+    }
+
 	public void stop() throws IOException
 	{
 		for ( int x=0; x<voices.size(); x++) 
