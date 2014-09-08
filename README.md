@@ -51,7 +51,7 @@ This version cleans up a lot of legacy code, adds success and failure callbacks 
 
 Via Cordova CLI:
 ```bash
-cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
+cordova plugin add de.neofonie.cordova.plugin.nativeaudio
 ```
 =======================
 ##Usage
