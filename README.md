@@ -26,8 +26,7 @@ This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playbac
 ## Roadmap
 
 ### Next Steps
-* add rich feedback / callback API to Android
-* update ngCordova with newest API features
+* update ngCordova with all API functions
 
 ### Perspective
 Following the Cordova philosophy, this is a "shim" for a web audio implementation (on mobile) which is as fast and feature-rich as the native APIs. Currently, neither the established HTML5 Audio or the new Web Audio API a cross-platform solution for mobile which supports for polyphony, concurrency and maintains a low overhead (without resorting to fallbacks such as Flash).
