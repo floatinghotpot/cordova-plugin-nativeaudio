@@ -98,13 +98,13 @@ Fully concurrent and multichannel.
 
 
 ```javascript
-preloadComplex: function ( id, assetPath, volume, voices, successCallback, errorCallback)
+preloadComplex: function ( id, assetPath, volume, voices, delay, successCallback, errorCallback)
 ```
 
 Loads an audio file into memory. Optimized for background music / ambient sound.
-Can be stopped / looped.
+Uses highlevel native APIs with a larger footprint. (iOS: AVAudioPlayer).
+Can be stopped / looped and used with multiple voices. Can be faded in and out using the delay parameter.
 
-Uses higher-level native APIs with a larger footprint. (iOS: AVAudioPlayer).
 
 ####Volume & Voices
 
@@ -112,6 +112,8 @@ The default **volume** is 1.0, a lower default can be set by using a numerical v
 
 By default, there is 1 **vice**, that is: one instance that will be stopped & restarted on play().
 If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio.
+
+Change the float-based **delay** parameter to increase the fade-in/fade-out timing.
 
 ###Playback
 
