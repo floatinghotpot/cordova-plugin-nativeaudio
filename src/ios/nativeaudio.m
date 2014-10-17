@@ -129,6 +129,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     } else {
         voices = [NSNumber numberWithInt:1];
     }
+    
+    NSNumber *delay = nil;
+    if ( [arguments count] > 4 )
+    {
+        delay = [arguments objectAtIndex:4];
+    }
 
     if(audioMapping == nil) {
         audioMapping = [NSMutableDictionary dictionary];
@@ -142,7 +148,11 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
 
             if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
-                NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path withVoices:voices withVolume:volume];
+                NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
+                                                                      withVoices:voices
+                                                                      withVolume:volume
+                                                                   withFadeDelay:delay];
+                
                 audioMapping[audioID] = asset;
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
@@ -175,7 +185,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             if (asset != nil){
                 if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                     NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-                    [_asset play];
+                    [_asset playWithFade];
 
                     NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_PLAY, audioID];
                     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
@@ -215,7 +225,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
             if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-                [_asset stop];
+                [_asset stopWithFade];
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_STOP, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];

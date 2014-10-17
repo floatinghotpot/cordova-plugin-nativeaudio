@@ -10,7 +10,10 @@
 
 @implementation NativeAudioAsset
 
--(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices withVolume:(NSNumber*) volume
+static const CGFloat FADE_STEP = 0.05;
+static const CGFloat FADE_DELAY = 0.08;
+
+-(id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices withVolume:(NSNumber*) volume withFadeDelay:(NSNumber *)delay
 {
     self = [super init];
     if(self) {
@@ -24,6 +27,14 @@
             [player prepareToPlay];
             [voices addObject:player];
             [player setDelegate:self];
+            
+            if(delay)
+            {
+                fadeDelay = delay;
+            }
+            else {
+                fadeDelay = [NSNumber numberWithFloat:FADE_DELAY];
+            }
         }
         
         playIndex = 0;
@@ -41,11 +52,58 @@
     playIndex = playIndex % [voices count];
 }
 
+- (void)playWithFade
+{
+    AVAudioPlayer * player = [voices objectAtIndex:playIndex];
+    
+    if (!player.isPlaying)
+    {
+        [player setCurrentTime:0.0];
+        player.numberOfLoops = 0;
+        player.volume = 0;
+        [player play];
+        playIndex += 1;
+        playIndex = playIndex % [voices count];
+        [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
+    }
+    else
+    {
+        if(player.volume < initialVolume.floatValue)
+        {
+            player.volume += FADE_STEP;
+            [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
+        }
+    }
+}
+
 - (void) stop
 {
     for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
         [player stop];
+    }
+}
+
+- (void)stopWithFade
+{
+    BOOL shouldContinue = NO;
+    
+    for (int x = 0; x < [voices count]; x++) {
+        AVAudioPlayer * player = [voices objectAtIndex:x];
+        
+        if (player.isPlaying && player.volume > FADE_STEP) {
+            player.volume -= FADE_STEP;
+            shouldContinue = YES;
+        } else {
+            // Stop and get the sound ready for playing again
+            [player stop];
+            player.volume = initialVolume.floatValue;
+            player.currentTime = 0;
+        }
+    }
+    
+    if(shouldContinue) {
+        [self performSelector:@selector(stopWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
     }
 }
 
