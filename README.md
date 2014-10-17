@@ -9,24 +9,24 @@ Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gami
 
 1. [Description](#description)
 2. [History](#history)
-3. [Perspective](#perspective)
-4. [Roadmap](#roadmap)
-5. [AngularJS Integration](#angularjs-integration)
-6. [Next Steps](#next-steps)
-7. [Platform Support](#support)
+3. [Roadmap](#next-steps)
+5. [Integration](#integration)
+7. [Platform Support](#platform-support)
 8. [Installation](#installation)
 9. [Usage](#usage)
-10. [Functions](#functions)
-11. [Example Drum Pad](#example-drum-pad)
+10. [API](#api)
+11. [Demo](#demo)
+12. [Example](#example)
 
 =======================
 
-##Description
+## Description
 
 This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playback), polyphony (multi-voice playback) and minimized latency (via caching) in audio-based applications, by leveraging native audio APIs. Designed for the use in HTML5-based cross-platform games and mobile/hybrid audio applications.
 
 =======================
-##History
+
+## History
 
 Community-driven, clean fork of the Low Latency Audio Plugin for Cordova / PhoneGap, initially published by [Andrew Trice](http://www.tricedesigns.com/2012/01/25/low-latency-polyphonic-audio-in-phonegap/) and then maintained by [Raymond Xie](http://github.com/floatinghotpot/).
 
@@ -34,14 +34,15 @@ This project cleans up a lot of legacy code, and adds success, error and complet
 
 =======================
 
-## Perspective
+## Roadmap
+
 Following the Cordova philosophy, this is a shim for a web audio implementation (on mobile) which is as fast and feature-rich as native mobile APIs. Currently, neither HTML5 Audio or the more recent Web Audio API offer a cross-platform solution which 1) is fast, 2) supports polyphony, 3) concurrency and 4) maintains a low overhead.
 
 It should be replaced by a standardised W3C solution as soon as such an implementation offers comparable performance across (mobile) devices, which is crucial for HTML5-based games.
 
 =======================
 
-##AngularJS Integration
+## Integration
 
 This plugin is available as an AngularJS service module, facilitating the usage in AngularJS-based Cordova/PhoneGap projects.
 
@@ -50,26 +51,24 @@ Download it at the ngCordova [website](http://www.ngcordova.com) or the [reposit
 
 =======================
 
-## Next Steps
-* update ngCordova with newest API features
-
-=======================
-
-##Support
+## Platform Support
 
 * iOS, tested (6.1, 7.1.2)
 * Android, tested (4+)
 
 =======================
 
-##Installation
+## Installation
 
 Via Cordova CLI:
 ```bash
 cordova plugin add de.neofonie.cordova.plugin.nativeaudio
 ```
+
 =======================
+
 ##Usage
+
 
 1. Wait for `deviceReady`.
 1. Preload an audio asset and assign an id - either optimized for single-shot style short clips (`preloadSimple()`) or looping, ambient background audio (`preloadComplex()`)
@@ -77,7 +76,11 @@ cordova plugin add de.neofonie.cordova.plugin.nativeaudio
 3. `unload()` the audio asset via its id.
 
 =======================
-##Functions
+
+##API
+
+###Preloading
+
 ```javascript
 preloadSimple: function ( id, assetPath, successCallback, errorCallback)
 ```
@@ -103,12 +106,14 @@ Can be stopped / looped.
 
 Uses higher-level native APIs with a larger footprint. (iOS: AVAudioPlayer).
 
-####Voices
-By default, there is 1 voice, that is: one instance that will be stopped & restarted on play().
+####Volume & Voices
+
+The default **volume** is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
+
+By default, there is 1 **vice**, that is: one instance that will be stopped & restarted on play().
 If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio.
 
-####Volume
-The default volume is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
+###Playback
 
 * params
  * id - string unique ID for the audio file
@@ -177,7 +182,8 @@ Changes the volume for preloaded complex assets.
  * errorCallback - error callback function
 
 =======================
-##Example
+
+##Demo
 
 In this example, the resources reside in a relative path under the Cordova root folder "www/".
 
@@ -214,8 +220,10 @@ if( window.plugins && window.plugins.NativeAudio ) {
 ```
 
 =======================
-## Example Drum Pad
-The demo drumpad in the examples directory is a first starting point.
+
+## Example
+
+The **Drumpad** in the examples directory is a first starting point.
 
 ```bash
 cordova create drumpad com.example.nativeaudio drumpad
