@@ -133,6 +133,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSNumber *delay = nil;
     if ( [arguments count] > 4 )
     {
+        // The delay is determines how fast the asset is
+        // faded in and out
         delay = [arguments objectAtIndex:4];
     }
 
@@ -185,6 +187,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             if (asset != nil){
                 if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                     NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+                    // Music assets are faded in
                     [_asset playWithFade];
 
                     NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_PLAY, audioID];
@@ -225,6 +228,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
             if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+                // Music assets are faded out
                 [_asset stopWithFade];
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_STOP, audioID];
