@@ -28,13 +28,9 @@ module.exports  = {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadSimple", [id, assetPath]);
     },
     
-    preloadComplex: function(id, assetPath, volume, voices, successCallback, errorCallback) {
+    preloadComplex: function(id, assetPath, volume, voices, delay, successCallback, errorCallback) {
 
-        // Set voices and volume to defaults if not supplied
-        if (voices === undefined) voices = 1;
-        if (volume === undefined) volume = 1.0;
-        
-        return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadComplex", [id, assetPath, parseFloat(volume), voices]);
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadComplex", [id, assetPath, parseFloat(volume), voices, parseFloat(delay)]);
     },
 
     play: function(id, successCallback, errorCallback, completeCallback) {
