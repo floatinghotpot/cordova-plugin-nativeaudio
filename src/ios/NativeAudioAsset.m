@@ -35,6 +35,8 @@ static const CGFloat FADE_DELAY = 0.08;
             else {
                 fadeDelay = [NSNumber numberWithFloat:FADE_DELAY];
             }
+            
+            initialVolume = volume;
         }
         
         playIndex = 0;
