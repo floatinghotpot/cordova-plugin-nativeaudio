@@ -13,7 +13,8 @@ import java.util.concurrent.Callable;
 
 import android.content.res.AssetFileDescriptor;
 
-public class NativeAudioAsset  {
+public class NativeAudioAsset
+{
 
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
@@ -40,25 +41,28 @@ public class NativeAudioAsset  {
 		playIndex = playIndex % voices.size();
 	}
 
-    public boolean pause()
-    {
-        boolean wasPlaying = false;
-        for ( int x=0; x<voices.size(); x++)
-        {
-            NativeAudioAssetComplex voice = voices.get(x);
-            wasPlaying |= voice.pause();
-        }
-        return wasPlaying;
-    }
+	public boolean pause()
+	{
+		boolean wasPlaying = false;
+		for ( int x=0; x<voices.size(); x++)
+		{
+				NativeAudioAssetComplex voice = voices.get(x);
+				wasPlaying |= voice.pause();
+		}
+		return wasPlaying;
+	}
 
-    public void resume()
-    {
-        // only resumes first instance, assume being used on a stream and not multiple sfx
-        NativeAudioAssetComplex voice = voices.get(0);
-        voice.resume();
-    }
+	public void resume()
+	{
+		// only resumes first instance, assume being used on a stream and not multiple sfx
+		if (voices.size() > 0)
+		{
+				NativeAudioAssetComplex voice = voices.get(0);
+				voice.resume();
+		}
+	}
 
-	public void stop() throws IOException
+    public void stop()
 	{
 		for ( int x=0; x<voices.size(); x++) 
 		{
@@ -86,4 +90,12 @@ public class NativeAudioAsset  {
 		voices.removeAll(voices);
 	}
 	
+	public void setVolume(float volume)
+	{
+		for (int x = 0; x < voices.size(); x++)
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.setVolume(volume);
+		}
+	}
 }
