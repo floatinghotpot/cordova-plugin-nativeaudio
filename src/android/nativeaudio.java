@@ -18,7 +18,9 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.media.AudioManager;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -27,7 +29,7 @@ import org.apache.cordova.PluginResult.Status;
 import org.json.JSONObject;
 
 
-public class NativeAudio extends CordovaPlugin {
+public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFocusChangeListener {
 
 	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
 	public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id.";
@@ -39,6 +41,7 @@ public class NativeAudio extends CordovaPlugin {
 	public static final String LOOP="loop";
 	public static final String UNLOAD="unload";
     public static final String ADD_COMPLETE_LISTENER="addCompleteListener";
+	public static final String SET_VOLUME_FOR_COMPLEX_ASSET="setVolumeForComplexAsset";
 
 	private static final String LOGTAG = "NativeAudio";
 	
@@ -137,8 +140,6 @@ public class NativeAudio extends CordovaPlugin {
 			}			
 		} catch (JSONException e) {
 			return new PluginResult(Status.ERROR, e.toString());
-		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
 		}
 		
 		return new PluginResult(Status.OK);
@@ -165,7 +166,41 @@ public class NativeAudio extends CordovaPlugin {
 		
 		return new PluginResult(Status.OK);
 	}
-	
+
+	private PluginResult executeSetVolumeForComplexAsset(JSONArray data) {
+		String audioID;
+		float volume;
+		try {
+			audioID = data.getString(0);
+			volume = (float) data.getDouble(1);
+			Log.d( LOGTAG, "setVolume - " + audioID );
+			
+			if (assetMap.containsKey(audioID)) {
+				NativeAudioAsset asset = assetMap.get(audioID);
+				asset.setVolume(volume);
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+			}
+		} catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		}
+		return new PluginResult(Status.OK);
+	}
+	@Override
+	protected void pluginInitialize() {
+		AudioManager am = (AudioManager)cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+
+	        int result = am.requestAudioFocus(this,
+	                // Use the music stream.
+	                AudioManager.STREAM_MUSIC,
+	                // Request permanent focus.
+	                AudioManager.AUDIOFOCUS_GAIN);
+
+		// Allow android to receive the volume events
+		this.webView.setButtonPlumbedToJs(KeyEvent.KEYCODE_VOLUME_DOWN, false);
+		this.webView.setButtonPlumbedToJs(KeyEvent.KEYCODE_VOLUME_UP, false);
+	}
+
 	@Override
 	public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
 		Log.d(LOGTAG, "Plugin Called: " + action);
@@ -218,8 +253,14 @@ public class NativeAudio extends CordovaPlugin {
                     completeCallbacks.put(audioID, callbackContext);
                 } catch (JSONException e) {
                     callbackContext.sendPluginResult(new PluginResult(Status.ERROR, e.toString()));
-                }
-            }
+		}
+	    } else if (SET_VOLUME_FOR_COMPLEX_ASSET.equals(action)) {
+				cordova.getThreadPool().execute(new Runnable() {
+			public void run() {
+	                        callbackContext.sendPluginResult( executeSetVolumeForComplexAsset(data) );
+                    }
+                 });
+	    }
             else {
                 result = new PluginResult(Status.OK);
             }
@@ -241,6 +282,16 @@ public class NativeAudio extends CordovaPlugin {
             resumeList = new ArrayList<NativeAudioAsset>();
         }
 	}
+
+    public void onAudioFocusChange(int focusChange) {
+        if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+            // Pause playback
+        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+            // Resume playback
+        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+            // Stop playback
+        }
+    }
 
     @Override
     public void onPause(boolean multitasking) {
