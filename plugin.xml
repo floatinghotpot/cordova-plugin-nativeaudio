@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="de.neofonie.cordova.plugin.nativeaudio"
-        version="3.0.0">
+        version="3.0.1">
 
     <name>Cordova Native Audio</name>
     <description>Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gaming and audio applications which require minimum latency, polyphony and concurrency.
@@ -29,7 +29,7 @@
             </feature>
         </config-file>
 
-        <source-file src="src/android/nativeaudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
         <source-file src="src/android/NativeAudioAsset.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
         <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
 
