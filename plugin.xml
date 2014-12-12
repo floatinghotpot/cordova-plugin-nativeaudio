@@ -29,7 +29,7 @@
             </feature>
         </config-file>
 
-        <source-file src="src/android/NativeAudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/nativeaudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
         <source-file src="src/android/NativeAudioAsset.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
         <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
 
