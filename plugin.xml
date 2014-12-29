@@ -34,9 +34,9 @@
         <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
 
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-            <uses-permission name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-            <uses-permission name="android.permission.READ_PHONE_STATE"/>
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
         </config-file>
 
     </platform>
