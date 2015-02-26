@@ -51,7 +51,7 @@ Download it at the ngCordova [website](http://www.ngcordova.com) or the [reposit
 
 =======================
 
-## Support
+## Supported Platforms
 
 * iOS (tested with 7.1.2, 8.1.3)
 * Android (tested in API levels 14 - 21)
