@@ -193,7 +193,7 @@ In this example, the resources reside in a relative path under the Cordova root 
 if( window.plugins && window.plugins.NativeAudio ) {
 	
 	// Preload audio resources
-	window.plugins.NativeAudio.preloadComplex( 'music', 'audio/music.mp3', 1, 1, function(msg){
+	window.plugins.NativeAudio.preloadComplex( 'music', 'audio/music.mp3', 1, 1, 0, function(msg){
 	}, function(msg){
 		console.log( 'error: ' + msg );
 	});
