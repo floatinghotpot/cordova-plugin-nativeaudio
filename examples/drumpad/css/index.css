@@ -38,24 +38,30 @@ html, body {
 /* Drum Styles */
 
 .drum {
-	width: 50%;
-	height: 50%;
-	float: left;
-	position: relative;
-	border-radius: 30px;
-	outline: 1px solid #000;
-	background: #fff;
-	font-size: 15px;
-	font-family: sans-serif;
-	font-weight: bold;
-	text-align: center;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	color: #999;
-	line-height: 50px;
+    width: 50%;
+    height: 50%;
+    box-sizing: border-box;
+    float: left;
+    position: relative;
+    border-radius: 19px;
+    background: rgb(197, 197, 197);
+    font-size: 20px;
+    font-family: sans-serif;
+    text-align: center;
+    color: rgb(53, 53, 53);
+    box-shadow: inset 0px 0px 0px 6px rgb(255, 255, 255);
 }
 .touched {
-	color: #e87fa9;  
-	background-color: #c31b5e;  
-	outline: 1px solid #680b30;
+	background-color: #34495e;
+}
+
+.drum span {
+    border: 0px solid;
+    background: transparent;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
 }

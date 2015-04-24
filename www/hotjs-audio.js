@@ -10,7 +10,7 @@ var hotjs = hotjs || {};
         // id -> obj mapping
         res_cache: {},
 
-        preloadFX: function(id, assetPath, success, fail) {
+        preloadSimple: function(id, assetPath, success, fail) {
             var res = new Audio();
             res.addEventListener('canplaythrough', success, false);
             res.onerror = fail;
@@ -19,7 +19,7 @@ var hotjs = hotjs || {};
             this.res_cache[ id ] = res;
         },
 
-        preloadAudio: function(id, assetPath, volume, voices, success, fail) {
+        preloadComplex: function(id, assetPath, volume, voices, delay, success, fail) {
             var res = new Audio();
             res.addEventListener('canplaythrough', success, false);
             res.onerror = fail;
@@ -81,8 +81,8 @@ var hotjs = hotjs || {};
     hotjs.Audio = hotjs.Audio || {};
 
     var initHotjsAudio = function() {
-        if(window.plugins && window.plugins.LowLatencyAudio) {
-            hotjs.Audio = window.plugins.LowLatencyAudio;
+        if(window.plugins && window.plugins.NativeAudio) {
+            hotjs.Audio = window.plugins.NativeAudio;
             if(typeof hotjs.Audio.mute !== 'function') {
                 hotjs.Audio.mute = function(ismute, success, fail) {
                 };
@@ -91,12 +91,12 @@ var hotjs = hotjs || {};
             hotjs.Audio = html5_audio;
         }
 
-        hotjs.Audio.preloadFXBatch = function(fx_mapping, success, fail) {
+        hotjs.Audio.preloadSimpleBatch = function(fx_mapping, success, fail) {
             for(var k in fx_mapping) {
-                this.preloadFX(k, fx_mapping[k]);
+                this.preloadSimple(k, fx_mapping[k]);
             }
         };
-        hotjs.Audio.unloadFXBatch = function(fx_mapping, success, fail) {
+        hotjs.Audio.unloadBatch = function(fx_mapping, success, fail) {
             for(var k in fx_mapping) {
                 this.unload(k);
             }
