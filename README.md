@@ -62,7 +62,7 @@ Download it at the ngCordova [website](http://www.ngcordova.com) or the [reposit
 
 Via Cordova CLI:
 ```bash
-cordova plugin add com.rjfun.cordova.plugin.nativeaudio
+cordova plugin add cordova-plugin-nativeaudio
 ```
 
 =======================
@@ -231,9 +231,9 @@ The **Drumpad** in the examples directory is a first starting point.
 cordova create drumpad com.example.nativeaudio drumpad
 cd drumpad
 cordova platform add ios
-cordova plugin add com.rjfun.cordova.plugin.nativeaudio
+cordova plugin add cordova-plugin-nativeaudio
 rm -R www/*
-cp -r plugins/com.rjfun.cordova.plugin.nativeaudio/examples/drumpad/* www
+cp -r plugins/cordova-plugin-nativeaudio/examples/drumpad/* www
 cordova build ios
 cordova emulate ios
 ```
