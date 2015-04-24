@@ -28,7 +28,7 @@ This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playbac
 
 ## History
 
-Community-driven, clean fork of the Low Latency Audio Plugin for Cordova / PhoneGap, initially published by [Andrew Trice](http://www.tricedesigns.com/2012/01/25/low-latency-polyphonic-audio-in-phonegap/) and then maintained by [Raymond Xie](http://github.com/floatinghotpot/).
+Community-driven, clean fork of the Low Latency Audio Plugin for Cordova / PhoneGap, initially published by [Andrew Trice](http://www.tricedesigns.com/2012/01/25/low-latency-polyphonic-audio-in-phonegap/) and then maintained by [Raymond Xie](http://github.com/floatinghotpot/) and [Sidney Bofah](https://github.com/SidneyS/).
 
 This project cleans up a lot of legacy code, and adds success, error and completion callbacks. It also features integration in AngularJS projects via [ngCordova](http://www.ngcordova.com).
 
@@ -62,7 +62,7 @@ Download it at the ngCordova [website](http://www.ngcordova.com) or the [reposit
 
 Via Cordova CLI:
 ```bash
-cordova plugin add de.neofonie.cordova.plugin.nativeaudio
+cordova plugin add com.rjfun.cordova.plugin.nativeaudio
 ```
 
 =======================
@@ -231,9 +231,9 @@ The **Drumpad** in the examples directory is a first starting point.
 cordova create drumpad com.example.nativeaudio drumpad
 cd drumpad
 cordova platform add ios
-cordova plugin add de.neofonie.cordova.plugin.nativeaudio
+cordova plugin add com.rjfun.cordova.plugin.nativeaudio
 rm -R www/*
-cp -r plugins/de.neofonie.cordova.plugin.nativeaudio/examples/drumpad/* www
+cp -r plugins/com.rjfun.cordova.plugin.nativeaudio/examples/drumpad/* www
 cordova build ios
 cordova emulate ios
 ```

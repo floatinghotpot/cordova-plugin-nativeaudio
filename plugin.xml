@@ -27,13 +27,13 @@
         
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="NativeAudio">
-                <param name="android-package" value="de.neofonie.cordova.plugin.nativeaudio.NativeAudio"/>
+                <param name="android-package" value="com.rjfun.cordova.plugin.nativeaudio.NativeAudio"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/NativeAudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
-        <source-file src="src/android/NativeAudioAsset.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
-        <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudio.java" target-dir="src/com/rjfun/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/com/rjfun/cordova/plugin/nativeaudio"/>
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
