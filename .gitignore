@@ -1,3 +1,14 @@
 # ignore following files
 .settings
-
+.idea
+node_modules
+.tmp
+.sass-cache
+app/bower_components
+coverage
+platforms
+plugins
+*.swp
+*.swo
+*.log
+*.DS_Store

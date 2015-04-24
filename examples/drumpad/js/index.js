@@ -38,23 +38,27 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        
-		if( window.plugins && window.plugins.LowLatencyAudio ) {
 
-			window.plugins.LowLatencyAudio.preloadFX('assets/bass.mp3', 'assets/bass.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('assets/snare.mp3', 'assets/snare.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('assets/highhat.mp3', 'assets/highhat.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });
-			window.plugins.LowLatencyAudio.preloadFX('assets/bongo.mp3', 'assets/bongo.mp3', function(msg){}, function(msg){ alert( 'Error: ' + msg ); });	    
-		}
+        if( window.plugins && window.plugins.NativeAudio ) {
+
+            window.plugins.NativeAudio.preloadSimple('assets/bass.mp3', 'assets/bass.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
+            window.plugins.NativeAudio.preloadSimple('assets/snare.mp3', 'assets/snare.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
+            window.plugins.NativeAudio.preloadSimple('assets/highhat.mp3', 'assets/highhat.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
+            window.plugins.NativeAudio.preloadSimple('assets/bongo.mp3', 'assets/bongo.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
+
+            window.plugins.NativeAudio.preloadComplex('assets/ambient.mp3', 'assets/ambient.mp3', 0.7, 1, function(msg){console.info(msg), window.plugins.NativeAudio.play('assets/ambient.mp3')}, function(msg){ alert( 'Error: ' + msg ); });
+
+
+
+            window.plugins.NativeAudio.play('assets/ambient.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); }, function(msg){ console.error( 'Complete: ' + msg ); });
+        }
 
     },
-    
-	play: function(drum) {
-		document.getElementById(drum).className = 'drum touched';
-		window.plugins.LowLatencyAudio.play('assets/' + drum + '.mp3');
-	},
-    
-	touchEnd: function(event) {
-		event.target.className = 'drum';
-	}
+
+    play: function(drum) {
+        document.getElementById(drum).classList.add('touched');
+        window.plugins.NativeAudio.play('assets/' + drum + '.mp3', function(msg){console.info(msg), document.getElementById(drum).classList.remove('touched');}, function(msg){ console.error( 'Error: ' + msg ); });
+    }
+
+
 };

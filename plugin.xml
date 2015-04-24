@@ -1,60 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.rjfun.cordova.plugin.lowlatencyaudio"
-    version="1.1.4">
+    id="com.rjfun.cordova.plugin.nativeaudio"
+    version="3.0.2">
       
-    <name>LowLatencyAudio</name>
-    <author>Andrew Trice, updated by Raymond Xie, etc.</author>
-	<description>Cordova/PhoneGap 3+ Plugin to support Low Latency and Polyphonic Audio Playback on Android and iOS, must have for mobile apps/games, as HTML5 audio in mobile browsers is really poor. Also implemented same interface for HTML5 audio, useful when test in PC browser.</description>
+    <name>Cordova Native Audio</name>
+    <author>Andrew Trice, Raymond Xie, SidneyS, etc.</author>
+	<description>Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games</description>
     
 	<license>MIT</license>
-	<keywords>audio,fx,music,mp3,game</keywords>
-    <repo>https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio.git</repo>
-    <issue>https://github.com/floatinghotpot/cordova-plugin-lowlatencyaudio/issues</issue>
+	<keywords>audio,fx,music,mp3,game,rjfun</keywords>
+    <repo>https://github.com/floatinghotpot/cordova-plugin-nativeaudio.git</repo>
+    <issue>https://github.com/floatinghotpot/cordova-plugin-nativeaudio/issues</issue>
 
 	<engines>
-	    <engine name="cordova" version=">=3.0" />
+	    <engine name="cordova" version=">=3.5" />
 	</engines>
 
-    <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
-        <clobbers target="window.plugins.LowLatencyAudio" />
+    <js-module src="www/nativeaudio.js" name="nativeaudio">
+        <clobbers target="window.plugins.NativeAudio"/>
     </js-module>
 
     <!-- android -->
     <platform name="android">
         
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="LowLatencyAudio">
-                <param name="android-package" value="com.rjfun.cordova.plugin.LowLatencyAudio"/>
+            <feature name="NativeAudio">
+                <param name="android-package" value="de.neofonie.cordova.plugin.nativeaudio.NativeAudio"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/com/rjfun/cordova/plugin" />
-        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin" />
-        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/rjfun/cordova/plugin" />
-        
-     </platform>
-     
-     <!-- ios -->
-     <platform name="ios">
-         
-         <config-file target="config.xml" parent="/*">
-             <feature name="LowLatencyAudio">
-                 <param name="ios-package" value="LowLatencyAudio" />
-             </feature>
-         </config-file>
-         
-         <framework src="Foundation.framework" />
-         <framework src="AVFoundation.framework" />
-         <framework src="AudioToolbox.framework" /> 
-         
-         <header-file src="src/ios/LowLatencyAudio.h" />
-         <source-file src="src/ios/LowLatencyAudio.m" />
-         
-         <header-file src="src/ios/LowLatencyAudioAsset.h" />
-         <source-file src="src/ios/LowLatencyAudioAsset.m" />
-       
-	</platform>
-          
+        <source-file src="src/android/NativeAudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudioAsset.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        </config-file>
+
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="NativeAudio">
+                <param name="ios-package" value="NativeAudio"/>
+            </feature>
+        </config-file>
+
+        <framework src="Foundation.framework"/>
+        <framework src="AVFoundation.framework"/>
+        <framework src="AudioToolbox.framework"/>
+
+        <header-file src="src/ios/NativeAudio.h"/>
+        <source-file src="src/ios/NativeAudio.m"/>
+
+        <header-file src="src/ios/NativeAudioAsset.h"/>
+        <source-file src="src/ios/NativeAudioAsset.m"/>
+
+    </platform>
+
 </plugin>
