@@ -185,7 +185,7 @@ Changes the volume for preloaded complex assets.
 
 =======================
 
-##Demo
+## Example Code
 
 In this example, the resources reside in a relative path under the Cordova root folder "www/".
 
@@ -223,17 +223,24 @@ if( window.plugins && window.plugins.NativeAudio ) {
 
 =======================
 
-## Example
+## Demo
 
 The **Drumpad** in the examples directory is a first starting point.
+
+```bash
+[sudo] npm install plugin-verify -g
+plugin-verify cordova-plugin-nativeaudio ios
+```
+
+Or, type the commands step by step:
 
 ```bash
 cordova create drumpad com.example.nativeaudio drumpad
 cd drumpad
 cordova platform add ios
 cordova plugin add cordova-plugin-nativeaudio
-rm -R www/*
-cp -r plugins/cordova-plugin-nativeaudio/examples/drumpad/* www
+rm -r www/*
+cp -r plugins/cordova-plugin-nativeaudio/test/* www
 cordova build ios
 cordova emulate ios
 ```
