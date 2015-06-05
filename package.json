@@ -1,27 +1,40 @@
 {
-    "version": "3.0.3",
-    "name": "com.rjfun.cordova.nativeaudio",
-    "cordova_name": "Cordova Native Audio",
-    "description": "Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games",
-    "license": "MIT",
-    "repo": "https://github.com/floatinghotpot/cordova-plugin-nativeaudio.git",
-    "issue": "https://github.com/floatinghotpot/cordova-plugin-nativeaudio/issues",
-    "keywords": [
-        "audio",
-        "fx",
-        "music",
-        "mp3",
-        "game",
-        "rjfun"
-    ],
+  "name": "cordova-plugin-nativeaudio",
+  "version": "3.0.4",
+  "description": "Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games",
+  "cordova": {
+    "id": "cordova-plugin-nativeaudio",
     "platforms": [
-        "android",
-        "ios"
-    ],
-    "engines": [
-        {
-            "name": "cordova",
-            "version": ">=3.5"
-        }
+      "android",
+      "ios"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/floatinghotpot/cordova-plugin-nativeaudio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/floatinghotpot/cordova-plugin-nativeaudio/issues"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "music",
+    "audio",
+    "game",
+    "mp3",
+    "rjfun"
+  ],
+  "author": {
+    "name": "Andrew Trice"
+  },
+  "contributors": [{
+    "name": "Andrew Trice"
+  },{
+    "name": "Raymond Xie",
+    "email": "rjfun.mobile@gmail.com"
+  },{
+    "name": "Sidney Bofah"
+  }],
+  "license": "MIT"
 }

@@ -41,23 +41,38 @@ var app = {
 
         if( window.plugins && window.plugins.NativeAudio ) {
 
-            window.plugins.NativeAudio.preloadSimple('assets/bass.mp3', 'assets/bass.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
-            window.plugins.NativeAudio.preloadSimple('assets/snare.mp3', 'assets/snare.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
-            window.plugins.NativeAudio.preloadSimple('assets/highhat.mp3', 'assets/highhat.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
-            window.plugins.NativeAudio.preloadSimple('assets/bongo.mp3', 'assets/bongo.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); });
+            var items = ['bass', 'snare', 'highhat', 'bongo'];
+            for(var i=0; i<items.length; i++) {
+                var asset = 'assets/' + items[i] + '.mp3';
+                window.plugins.NativeAudio.preloadSimple(items[i], 
+                                                         asset, 
+                                                         function(msg){console.info(msg)}, 
+                                                         function(msg){ console.error( 'Error: ' + msg ); });
+            }
 
-            window.plugins.NativeAudio.preloadComplex('assets/ambient.mp3', 'assets/ambient.mp3', 0.7, 1, function(msg){console.info(msg), window.plugins.NativeAudio.play('assets/ambient.mp3')}, function(msg){ alert( 'Error: ' + msg ); });
+            window.plugins.NativeAudio.preloadComplex('noise', 
+                                                      'assets/ambient.mp3', 
+                                                      1, // volume
+                                                      1, // voices
+                                                      0, // delay
+            function(msg) {
+                console.info(msg); 
+                window.plugins.NativeAudio.play('noise', 
+                                                function(msg){console.info(msg)}, 
+                                                function(msg){ console.error( 'Error: ' + msg ); }, 
+                                                function(msg){ console.error( 'Complete: ' + msg ); });
+            }, 
+                                                      function(msg){ alert( 'Error: ' + msg ); });
 
-
-
-            window.plugins.NativeAudio.play('assets/ambient.mp3', function(msg){console.info(msg)}, function(msg){ console.error( 'Error: ' + msg ); }, function(msg){ console.error( 'Complete: ' + msg ); });
         }
 
     },
 
     play: function(drum) {
         document.getElementById(drum).classList.add('touched');
-        window.plugins.NativeAudio.play('assets/' + drum + '.mp3', function(msg){console.info(msg), document.getElementById(drum).classList.remove('touched');}, function(msg){ console.error( 'Error: ' + msg ); });
+        window.plugins.NativeAudio.play(drum, 
+                                        function(msg){console.info(msg), document.getElementById(drum).classList.remove('touched');},
+                                        function(msg){ console.error( 'Error: ' + msg ); });
     }
 
 
