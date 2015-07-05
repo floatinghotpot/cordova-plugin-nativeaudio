@@ -27,6 +27,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 - (void)pluginInitialize
 {
+    self.fadeMusic = NO;
 
     AudioSessionInitialize(NULL, NULL, nil , nil);
     AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -43,6 +44,25 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     }
 
     [session setActive: YES error: nil];
+}
+
+- (void) parseOptions:(NSDictionary*) options
+{
+    if ((NSNull *)options == [NSNull null]) return;
+
+    NSString* str = nil;
+
+    str = [options objectForKey:OPT_FADE_MUSIC];
+    if(str) self.fadeMusic = [str boolValue];
+}
+
+- (void) setOptions:(CDVInvokedUrlCommand *)command {
+    if([command.arguments count] > 0) {
+        NSDictionary* options = [command argumentAtIndex:0 withDefault:[NSNull null]];
+        [self parseOptions:options];
+    }
+
+    [self sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] to:command.callbackId];
 }
 
 - (void) preloadSimple:(CDVInvokedUrlCommand *)command
@@ -187,8 +207,13 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             if (asset != nil){
                 if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                     NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-                    // Music assets are faded in
-                    [_asset playWithFade];
+
+                    if(self.fadeMusic) {
+                        // Music assets are faded in
+                        [_asset playWithFade];
+                    } else {
+                        [_asset play];
+                    }
 
                     NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_PLAY, audioID];
                     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];

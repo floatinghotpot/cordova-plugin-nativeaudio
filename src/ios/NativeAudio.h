@@ -17,6 +17,11 @@
     NSMutableDictionary* completeCallbacks;
 }
 
+#define OPT_FADE_MUSIC  "fadeMusic"
+
+@property (assign) BOOL fadeMusic;
+
+- (void) setOptions:(CDVInvokedUrlCommand *)command;
 - (void) preloadSimple:(CDVInvokedUrlCommand *)command;
 - (void) preloadComplex:(CDVInvokedUrlCommand *)command;
 - (void) play:(CDVInvokedUrlCommand *)command;
@@ -25,5 +30,7 @@
 - (void) unload:(CDVInvokedUrlCommand *)command;
 - (void) setVolumeForComplexAsset:(CDVInvokedUrlCommand *)command;
 - (void) addCompleteListener:(CDVInvokedUrlCommand *)command;
+
+- (void) parseOptions:(NSDictionary*) options;
 
 @end
