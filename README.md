@@ -1,9 +1,6 @@
 #Cordova Native Audio Plugin
-=======================
 
 Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gaming and audio applications which require minimum latency, polyphony and concurrency.
-
-=======================
 
 ## Contents
 
@@ -18,13 +15,9 @@ Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gami
 11. [Demo](#demo)
 12. [Example](#example)
 
-=======================
-
 ## Description
 
 This Cordova / PhoneGap (3.5+) plugin enables concurrency (multi-channel playback), polyphony (multi-voice playback) and minimized latency (via caching) in audio-based applications, by leveraging native audio APIs. Designed for the use in HTML5-based cross-platform games and mobile/hybrid audio applications.
-
-=======================
 
 ## History
 
@@ -32,15 +25,11 @@ Community-driven, clean fork of the Low Latency Audio Plugin for Cordova / Phone
 
 This project cleans up a lot of legacy code, and adds success, error and completion callbacks. It also features integration in AngularJS projects via [ngCordova](http://www.ngcordova.com).
 
-=======================
-
 ## Roadmap
 
 Following the Cordova philosophy, this is a shim for a web audio implementation (on mobile) which is as fast and feature-rich as native mobile APIs. Currently, neither HTML5 Audio or the more recent Web Audio API offer a cross-platform solution which 1) is fast, 2) supports polyphony, 3) concurrency and 4) maintains a low overhead.
 
 It should be replaced by a standardised W3C solution as soon as such an implementation offers comparable performance across (mobile) devices, which is crucial for HTML5-based games.
-
-=======================
 
 ## Integration
 
@@ -49,14 +38,10 @@ This plugin is available as an AngularJS service module, facilitating the usage 
 It extends the ngCordova project, an effort by the great guys at [Drifty](http://github.com/driftyco), creators of the Ionic Framework.
 Download it at the ngCordova [website](http://www.ngcordova.com) or the [repository](http://www.github.com/driftyco/ng-cordova).
 
-=======================
-
 ## Supported Platforms
 
 * iOS (tested with 7.1.2, 8.1.3)
 * Android (tested in API levels 14 - 21)
-
-=======================
 
 ## Installation
 
@@ -65,8 +50,6 @@ Via Cordova CLI:
 cordova plugin add cordova-plugin-nativeaudio
 ```
 
-=======================
-
 ##Usage
 
 
@@ -74,8 +57,6 @@ cordova plugin add cordova-plugin-nativeaudio
 1. Preload an audio asset and assign an id - either optimized for single-shot style short clips (`preloadSimple()`) or looping, ambient background audio (`preloadComplex()`)
 2. `play()` the audio asset via its id.
 3. `unload()` the audio asset via its id.
-
-=======================
 
 ##API
 
@@ -183,8 +164,6 @@ Changes the volume for preloaded complex assets.
  * successCallback - success callback function
  * errorCallback - error callback function
 
-=======================
-
 ## Example Code
 
 In this example, the resources reside in a relative path under the Cordova root folder "www/".
@@ -221,8 +200,6 @@ if( window.plugins && window.plugins.NativeAudio ) {
 }
 ```
 
-=======================
-
 ## Demo
 
 The **Drumpad** in the examples directory is a first starting point.
@@ -230,6 +207,7 @@ The **Drumpad** in the examples directory is a first starting point.
 ```bash
 [sudo] npm install plugin-verify -g
 plugin-verify cordova-plugin-nativeaudio ios
+plugin-verify cordova-plugin-nativeaudio android
 ```
 
 Or, type the commands step by step:
