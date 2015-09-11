@@ -17,7 +17,7 @@
     NSMutableDictionary* completeCallbacks;
 }
 
-#define OPT_FADE_MUSIC  "fadeMusic"
+#define OPT_FADE_MUSIC  @"fadeMusic"
 
 @property (assign) BOOL fadeMusic;
 
