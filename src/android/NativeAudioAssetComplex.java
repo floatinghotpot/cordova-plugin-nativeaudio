@@ -162,6 +162,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			this.state = INVALID;
 			try {
 				this.stop();
+				if (completeCallback != null)
                 completeCallback.call();
 			}
 			catch (Exception e)
