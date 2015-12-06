@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="de.neofonie.cordova.plugin.nativeaudio"
-        version="3.1.0">
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-nativeaudio"
+    version="3.0.5">
+      
     <name>Cordova Native Audio</name>
-    <description>Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gaming and audio applications which require minimum latency, polyphony and concurrency.
-        Community-driven fork of the Low Latency Audio Plugin with rich API feedback and Ionic Framework integration.</description>
-    <license>MIT</license>
-    <keywords>audio,music,games</keywords>
-    <repo>https://github.com/sidneys/cordova-plugin-nativeaudio.git</repo>
-    <issue>https://github.com/sidneys/cordova-plugin-nativeaudio/issues</issue>
+    <author>Andrew Trice, Raymond Xie, SidneyS, etc.</author>
+	<description>Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games</description>
+    
+	<license>MIT</license>
+	<keywords>audio,fx,music,mp3,game,rjfun</keywords>
+    <repo>https://github.com/floatinghotpot/cordova-plugin-nativeaudio.git</repo>
+    <issue>https://github.com/floatinghotpot/cordova-plugin-nativeaudio/issues</issue>
 
-    <engines>
-        <engine name="cordova" version=">=3.5"/>
-    </engines>
+	<engines>
+	    <engine name="cordova" version=">=3.5" />
+	</engines>
 
     <js-module src="www/nativeaudio.js" name="nativeaudio">
         <clobbers target="window.plugins.NativeAudio"/>
@@ -25,13 +27,13 @@
         
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="NativeAudio">
-                <param name="android-package" value="de.neofonie.cordova.plugin.nativeaudio.NativeAudio"/>
+                <param name="android-package" value="com.rjfun.cordova.plugin.nativeaudio.NativeAudio"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/NativeAudio.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
-        <source-file src="src/android/NativeAudioAsset.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
-        <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/de/neofonie/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudio.java" target-dir="src/com/rjfun/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin/nativeaudio"/>
+        <source-file src="src/android/NativeAudioAssetComplex.java" target-dir="src/com/rjfun/cordova/plugin/nativeaudio"/>
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>

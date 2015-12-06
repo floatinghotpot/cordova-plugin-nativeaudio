@@ -22,6 +22,10 @@
 var exec = require('cordova/exec');
 
 module.exports  = {
+    setOptions: function(options, successCallback, errorCallback) {
+
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "setOptions", [options]);
+    },
 
     preloadSimple: function(id, assetPath, successCallback, errorCallback) {
 
