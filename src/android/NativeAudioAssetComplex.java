@@ -49,7 +49,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	
 	private void invokePlay( Boolean loop )
 	{
-		Boolean playing = ( mp.isLooping() || mp.isPlaying() );
+		Boolean playing = mp.isPlaying();
 		if ( playing )
 		{
 			mp.pause();
@@ -74,7 +74,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		try
 		{
-    				if ( mp.isLooping() || mp.isPlaying() )
+    				if ( mp.isPlaying() )
 				{
 					mp.pause();
 					return true;
@@ -96,7 +96,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		try
 		{
-			if ( mp.isLooping() || mp.isPlaying() )
+			if ( mp.isPlaying() )
 			{
 				state = INVALID;
 				mp.pause();
