@@ -3,10 +3,10 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-nativeaudio"
-    version="3.0.5">
+    version="3.0.6">
       
     <name>Cordova Native Audio</name>
-    <author>Andrew Trice, Raymond Xie, SidneyS, etc.</author>
+    <author>Andrew Trice, Raymond Xie, Sidney Bofah & other contributors</author>
 	<description>Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games</description>
     
 	<license>MIT</license>
