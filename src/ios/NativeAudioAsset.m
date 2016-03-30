@@ -69,14 +69,18 @@ static const CGFloat FADE_DELAY = 0.08;
         [player play];
         playIndex += 1;
         playIndex = playIndex % [voices count];
-        [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
+        });
     }
     else
     {
         if(player.volume < initialVolume.floatValue)
         {
             player.volume += FADE_STEP;
-            [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSelector:@selector(playWithFade) withObject:nil afterDelay:fadeDelay.floatValue];
+            });
         }
     }
 }
