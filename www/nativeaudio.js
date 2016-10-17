@@ -1,4 +1,4 @@
-/*
+cordova.define("cordova-plugin-nativeaudio.nativeaudio", function(require, exports, module) { /*
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -22,6 +22,10 @@
 var exec = require('cordova/exec');
 
 module.exports  = {
+    getCapabilities : function( success, fail ) {
+        return cordova.exec(success, fail || this._emptyError, "NativeAudio", "getCapabilities", []);
+    },
+
     setOptions: function(options, successCallback, errorCallback) {
 
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "setOptions", [options]);
@@ -61,3 +65,4 @@ module.exports  = {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "setVolumeForComplexAsset", [id, parseFloat(volume)]);
     }
 };
+});

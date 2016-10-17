@@ -46,6 +46,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String UNLOAD="unload";
     public static final String ADD_COMPLETE_LISTENER="addCompleteListener";
 	public static final String SET_VOLUME_FOR_COMPLEX_ASSET="setVolumeForComplexAsset";
+	public static final String GET_CAPABILITIES="getCapabilities";
 
 	private static final String LOGTAG = "NativeAudio";
 	
@@ -231,7 +232,22 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		            	callbackContext.sendPluginResult( executePreload(data) );
 		            }
 		        });				
-				
+			} else if(GET_CAPABILITIES.equals(action)) {
+				JSONObject returnVal = new JSONObject();
+				returnVal.put("panning", true);
+				returnVal.put("volume", true);
+				returnVal.put("tracks", -1);
+				returnVal.put("mp3", true);
+				returnVal.put("ogg", true);
+				returnVal.put("wav", true);
+				returnVal.put("mpeg", false);//not sure
+				returnVal.put("mp4", true);
+				returnVal.put("m4a", true);
+				returnVal.put("aiff", false);
+				returnVal.put("wma", false);
+				returnVal.put("mid", true);
+				callbackContext.sendPluginResult(new PluginResult(Status.OK, returnVal));
+				return true;
 			} else if (PRELOAD_COMPLEX.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
