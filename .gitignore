@@ -1,6 +1,7 @@
 # ignore following files
 .settings
 .idea
+.vscode
 node_modules
 .tmp
 .sass-cache
