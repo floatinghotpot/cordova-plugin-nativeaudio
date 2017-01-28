@@ -6,7 +6,7 @@
     version="3.0.7">
       
     <name>Cordova Native Audio</name>
-    <author>Andrew Trice, Raymond Xie, Sidney Bofah & other contributors</author>
+    <author>Andrew Trice, Raymond Xie, Sidney Bofah and other contributors</author>
 	<description>Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games</description>
     
 	<license>MIT</license>
