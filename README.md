@@ -6,14 +6,13 @@ Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gami
 
 1. [Description](#description)
 2. [History](#history)
-3. [Roadmap](#next-steps)
+3. [Roadmap](#roadmap)
 5. [Integration](#integration)
 7. [Supported Platforms](#supported-platforms)
 8. [Installation](#installation)
 9. [Usage](#usage)
 10. [API](#api)
 11. [Demo](#demo)
-12. [Example](#example)
 
 ## Description
 
