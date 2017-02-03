@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-nativeaudio",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Cordova/PhoneGap Plugin for low latency Native Audio Playback, must have for HTML5 games",
   "cordova": {
     "id": "cordova-plugin-nativeaudio",
