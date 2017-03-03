@@ -55,6 +55,12 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	private void invokePlay(Boolean loop) {
 		Boolean playing = mp.isPlaying();
+		if (playing) {
+			mp.pause();
+			mp.setLooping(loop);
+			mp.seekTo(0);
+			mp.start();
+		} 
 		if (!playing && state == PREPARED) {
 			state = (loop ? PENDING_LOOP : PENDING_PLAY);
 			onPrepared(mp);
@@ -87,7 +93,6 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				HACK_loopTimer.cancel();
 			if (mp.isPlaying()) {
 				state = INVALID;
-				mp.setLooping(false);
 				mp.pause();
 				mp.seekTo(0);
 			}
@@ -115,10 +120,12 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public void onPrepared(MediaPlayer mPlayer) {
 		if (state == PENDING_PLAY) {
+			mp.setLooping(false);
 			mp.seekTo(0);
 			mp.start();
 			state = PLAYING;
 		} else if (state == PENDING_LOOP) {
+			mp.setLooping(true);
 			HACK_loopTimer = new Timer();
 			HACK_loopTask = new TimerTask() {
 				@Override
