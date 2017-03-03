@@ -36,6 +36,9 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume, int preview) throws IOException {
 		mHackLoopingPreview = (long) preview;
+		// prevent the native loop to jump in
+		if (mHackLoopingPreview < 3)
+			mHackLoopingPreview = 3;
 		state = INVALID;
 		mp = new MediaPlayer();
 		mp.setOnCompletionListener(this);
@@ -58,7 +61,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			onPrepared(mp);
 		} else if (!playing) {
 			state = (loop ? PENDING_LOOP : PENDING_PLAY);
-			// mp.setLooping(loop);
+			mp.setLooping(loop);
 			mp.start();
 		}
 	}
@@ -86,6 +89,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 					HACK_loopTimer.cancel();
 				state = INVALID;
 				mp.pause();
+				mp.setLooping(false);
 				mp.seekTo(0);
 			}
 		} catch (IllegalStateException e) {
@@ -112,7 +116,6 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public void onPrepared(MediaPlayer mPlayer) {
 		if (state == PENDING_PLAY) {
-			mp.setLooping(false);
 			mp.seekTo(0);
 			mp.start();
 			state = PLAYING;
@@ -121,7 +124,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			HACK_loopTask = new TimerTask() {
 				@Override
 				public void run() {
-					mp.seekTo(0);
+					if (mp.isPlaying())
+						mp.seekTo(0);
 				}
 			};
 			long waitingTime = (long) mp.getDuration() - mHackLoopingPreview;
