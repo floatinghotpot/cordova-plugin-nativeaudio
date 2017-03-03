@@ -36,6 +36,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume, int preview) throws IOException {
 		mHackLoopingPreview = (long) preview;
+		if (mHackLoopingPreview < 5)
+			mHackLoopingPreview = 5;
 		state = INVALID;
 		mp = new MediaPlayer();
 		mp.setOnCompletionListener(this);
