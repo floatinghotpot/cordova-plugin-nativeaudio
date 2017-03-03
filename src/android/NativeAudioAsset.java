@@ -18,14 +18,12 @@ public class NativeAudioAsset {
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 
-	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException {
+	public NativeAudioAsset(AssetFileDescriptor afd, int preview, float volume) throws IOException {
 		voices = new ArrayList<NativeAudioAssetComplex>();
 
-		if (numVoices < 0)
-			numVoices = 1;
-
+		int	numVoices = 1;
 		for (int x = 0; x < numVoices; x++) {
-			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(afd, volume);
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(afd, volume, preview);
 			voices.add(voice);
 		}
 	}

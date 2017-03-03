@@ -31,10 +31,11 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private int state;
 	private Timer HACK_loopTimer;
 	private TimerTask HACK_loopTask;
-	private long mHackLoopingPreview = 100;
+	private long mHackLoopingPreview;
 	Callable<Void> completeCallback;
 
-	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume) throws IOException {
+	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume, int preview) throws IOException {
+		mHackLoopingPreview = (long) preview;
 		state = INVALID;
 		mp = new MediaPlayer();
 		mp.setOnCompletionListener(this);
