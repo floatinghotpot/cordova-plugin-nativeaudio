@@ -124,7 +124,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				@Override
 				public void run() {
 					try {
-						mp.seekTo(0);
+						if (mp.isPlaying())
+							mp.seekTo(0);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
