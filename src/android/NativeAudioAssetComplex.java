@@ -8,10 +8,10 @@
 package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
 
-import javax.management.timer.Timer;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
@@ -82,7 +82,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	public void stop() {
 		try {
 			if (mp.isPlaying()) {
-				if (loop) HACK_loopTimer.cancel();
+				if (state == LOOPING) HACK_loopTimer.cancel();
 				state = INVALID;
 				mp.pause();
 				mp.seekTo(0);
