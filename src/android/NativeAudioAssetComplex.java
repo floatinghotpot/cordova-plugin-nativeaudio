@@ -81,12 +81,12 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public void stop() {
 		try {
+			if (HACK_loopTimer != null)
+				HACK_loopTimer.cancel();
 			if (mp.isPlaying()) {
-				if (state == LOOPING)
-					HACK_loopTimer.cancel();
 				state = INVALID;
-				mp.pause();
 				mp.setLooping(false);
+				mp.pause();
 				mp.seekTo(0);
 			}
 		} catch (IllegalStateException e) {
