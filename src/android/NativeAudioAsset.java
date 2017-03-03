@@ -19,18 +19,17 @@ public class NativeAudioAsset
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 	
-	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume, int length) throws IOException
+	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
-		if ( numVoices < 0 )
-			numVoices = 1;
+		if ( numVoices < 0 ) numVoices = 1;
 		
-		for ( int x=0; x<numVoices; x++) 
-		{
-			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(afd, volume, length);
-			voices.add( voice );
-		}
+		// for ( int x=0; x<numVoices; x++) 
+		// {
+		NativeAudioAssetComplex voice = new NativeAudioAssetComplex(afd, volume, numVoices);
+		voices.add( voice );
+		// }
 	}
 	
 	public void play(Callable<Void> completeCb) throws IOException
