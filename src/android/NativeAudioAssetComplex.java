@@ -12,7 +12,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
 
-
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -32,7 +31,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private int state;
 	private Timer HACK_loopTimer;
 	private TimerTask HACK_loopTask;
-	private	double mHackLoopingPreview = 100;
+	private long mHackLoopingPreview = 100;
 	Callable<Void> completeCallback;
 
 	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume) throws IOException {
@@ -82,7 +81,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	public void stop() {
 		try {
 			if (mp.isPlaying()) {
-				if (state == LOOPING) HACK_loopTimer.cancel();
+				if (state == LOOPING)
+					HACK_loopTimer.cancel();
 				state = INVALID;
 				mp.pause();
 				mp.seekTo(0);
@@ -123,7 +123,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 					mp.seekTo(0);
 				}
 			};
-			long waitingTime = mp.getDuration() - mHackLoopingPreview;
+			long waitingTime = (long) mp.getDuration() - mHackLoopingPreview;
 			HACK_loopTimer.schedule(HACK_loopTask, waitingTime, waitingTime);
 			mp.seekTo(0);
 			mp.start();
