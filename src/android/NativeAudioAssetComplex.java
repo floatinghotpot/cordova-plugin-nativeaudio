@@ -134,9 +134,10 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 						try {
 							if (mp.isPlaying() && gapLoopTime > 0) {
 								mp.seekTo(0);
+								Log.i(NativeAudioAssetComplex.class.getName(), "Gap Timer seekTo 0.");
 							} else {
-								mp.seekTo(0);
 								mp.start();
+								Log.i(NativeAudioAssetComplex.class.getName(), "Gap Timer was too late.");
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -147,7 +148,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				GapTimer.schedule(GapTimerTask, waitingTime, waitingTime);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with Gap Timer enabled.");
 			} else if (gapLoopTime == -1) {
-				mp.setLooping(true);
+				mp.setLooping(false);
 				GapTimer = new Timer();
 				GapTimerTask = new TimerTask() {
 					@Override
@@ -155,13 +156,17 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 						try {
 							if (mp.isPlaying() && mp.getCurrentPosition() >= mp.getDuration()) {
 								mp.seekTo(0);
+								Log.i(NativeAudioAssetComplex.class.getName(), "Stress Check seekTo 0.");
+							} else {
+								mp.start();
+								Log.i(NativeAudioAssetComplex.class.getName(), "Stress Check was too late.");
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				};
-				GapTimer.schedule(GapTimerTask, 0, 11);
+				GapTimer.schedule(GapTimerTask, 0, 10);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with StressCheck enabled.");
 			} else {
 				mp.setLooping(true);
