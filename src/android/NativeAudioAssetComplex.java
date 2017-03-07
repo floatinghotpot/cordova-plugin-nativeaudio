@@ -146,6 +146,23 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				long waitingTime = (long) mp.getDuration() - (long) gapLoopTime;
 				GapTimer.schedule(GapTimerTask, waitingTime, waitingTime);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with Gap Timer enabled.");
+			} else if (gapLoopTime == -1) {
+				mp.setLooping(true);
+				GapTimer = new Timer();
+				GapTimerTask = new TimerTask() {
+					@Override
+					public void run() {
+						try {
+							if (mp.isPlaying() && mp.getCurrentPosition() >= mp.getDuration()) {
+								mp.seekTo(0);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				};
+				GapTimer.schedule(GapTimerTask, 0, 11);
+				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with StressCheck enabled.");
 			} else {
 				mp.setLooping(true);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with default loop enabled.");
