@@ -17,6 +17,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.util.Log;
 
 public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletionListener {
 
@@ -29,19 +30,19 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	private MediaPlayer mp;
 	private int state;
-	private Timer HACK_loopTimer;
-	private TimerTask HACK_loopTask;
-	private long mHackLoopingPreview;
+	private Timer GapTimer;
+	private TimerTask GapTimerTask;
+	private int gapLoopTime;
 	Callable<Void> completeCallback;
 
 	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume, int preview) throws IOException {
-		mHackLoopingPreview = (long) preview;
+		gapLoopTime = preview;
 		state = INVALID;
 		mp = new MediaPlayer();
 		mp.setOnCompletionListener(this);
 		mp.setOnPreparedListener(this);
 		mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-		mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		// mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
@@ -58,7 +59,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.setLooping(loop);
 			mp.seekTo(0);
 			mp.start();
-		} 
+		}
 		if (!playing && state == PREPARED) {
 			state = (loop ? PENDING_LOOP : PENDING_PLAY);
 			onPrepared(mp);
@@ -87,8 +88,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public void stop() {
 		try {
-			if (HACK_loopTimer != null)
-				HACK_loopTimer.cancel();
+			if (GapTimer != null)
+				GapTimer.cancel();
 			if (mp.isPlaying()) {
 				state = INVALID;
 				mp.pause();
@@ -123,21 +124,32 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.start();
 			state = PLAYING;
 		} else if (state == PENDING_LOOP) {
-			mp.setLooping(true);
-			HACK_loopTimer = new Timer();
-			HACK_loopTask = new TimerTask() {
-				@Override
-				public void run() {
-					try {
-						if (mp.isPlaying() && mHackLoopingPreview > 0)
-							mp.seekTo(0);
-					} catch (Exception e) {
-						e.printStackTrace();
+			// Self Manage the Loop
+			if (gapLoopTime > 0) {
+				mp.setLooping(false);
+				GapTimer = new Timer();
+				GapTimerTask = new TimerTask() {
+					@Override
+					public void run() {
+						try {
+							if (mp.isPlaying() && gapLoopTime > 0) {
+								mp.seekTo(0);
+							} else {
+								mp.seekTo(0);
+								mp.start();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
-				}
-			};
-			long waitingTime = (long) mp.getDuration() - mHackLoopingPreview;
-			HACK_loopTimer.schedule(HACK_loopTask, waitingTime, waitingTime);
+				};
+				long waitingTime = (long) mp.getDuration() - (long) gapLoopTime;
+				GapTimer.schedule(GapTimerTask, waitingTime, waitingTime);
+				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with Gap Timer enabled.");
+			} else {
+				mp.setLooping(true);
+				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with default loop enabled.");
+			}
 			mp.seekTo(0);
 			mp.start();
 			state = LOOPING;
