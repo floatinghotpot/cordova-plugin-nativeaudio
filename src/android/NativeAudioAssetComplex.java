@@ -135,7 +135,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 							if (mp.isPlaying() && gapLoopTime > 0) {
 								mp.seekTo(0);
 								Log.i(NativeAudioAssetComplex.class.getName(), "Gap Timer seekTo 0.");
-							} else {
+							} else if (!mp.isPlaying()) {
 								mp.start();
 								Log.i(NativeAudioAssetComplex.class.getName(), "Gap Timer was too late.");
 							}
@@ -157,7 +157,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 							if (mp.isPlaying() && mp.getCurrentPosition() >= mp.getDuration()) {
 								mp.seekTo(0);
 								Log.i(NativeAudioAssetComplex.class.getName(), "Stress Check seekTo 0.");
-							} else {
+							} else if (!mp.isPlaying()) {
 								mp.start();
 								Log.i(NativeAudioAssetComplex.class.getName(), "Stress Check was too late.");
 							}
