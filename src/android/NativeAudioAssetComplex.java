@@ -190,13 +190,13 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			}
 		} else if (gapLoopTime == -1) {
 			try {
-				MediaPlayer tmp = mp;
-				mp = nmp;
-				mp.setVolume(volume, volume);
-				nmp = prepareNextMediaplayer();
-				mp.setNextMediaPlayer(nmp);
-				tmp.stop();
-				tmp.release();
+				this.nmp.setVolume(volume, volume);
+				MediaPlayer tmp = prepareNextMediaplayer();
+				this.nmp.setNextMediaPlayer(tmp);
+				this.mp = this.nmp;
+				this.nmp = tmp;
+				mPlayer.stop();
+				mPlayer.release();
 				Log.i(NativeAudioAssetComplex.class.getName(), "Continue with GapLess Next Mediaplayer.");
 			} catch (IOException e) {
 				e.printStackTrace();
