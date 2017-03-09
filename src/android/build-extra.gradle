@@ -1,0 +1,5 @@
+repositories {
+    jcenter()
+}
+
+compile 'com.google.android.exoplayer:exoplayer:r1.5.14'

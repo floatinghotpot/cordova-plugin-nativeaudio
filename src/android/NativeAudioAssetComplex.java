@@ -29,22 +29,32 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private static final int LOOPING = 5;
 
 	private MediaPlayer mp;
+	private MediaPlayer nmp;
 	private int state;
 	private Timer GapTimer;
 	private TimerTask GapTimerTask;
 	private int gapLoopTime;
+	private float volume;
+	private AssetFileDescriptor afd;
 	Callable<Void> completeCallback;
 
 	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume, int preview) throws IOException {
-		gapLoopTime = preview;
-		state = INVALID;
-		mp = new MediaPlayer();
-		mp.setOnCompletionListener(this);
-		mp.setOnPreparedListener(this);
-		mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-		// mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		mp.setVolume(volume, volume);
-		mp.prepare();
+		this.gapLoopTime = preview;
+		this.state = INVALID;
+		this.volume = volume;
+		this.afd = afd;
+		this.mp = prepareNextMediaplayer();
+	}
+
+	private prepareNextMediaplayer() {
+		MediaPlayer m = new MediaPlayer();
+		m.setOnCompletionListener(this);
+		m.setOnPreparedListener(this);
+		m.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+		m.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		m.setVolume(volume, volume);
+		m.prepare();
+		return m;
 	}
 
 	public void play(Callable<Void> completeCb) throws IOException {
@@ -101,6 +111,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	}
 
 	public void setVolume(float volume) {
+		this.volume = volume;
 		try {
 			mp.setVolume(volume, volume);
 		} catch (IllegalStateException e) {
@@ -134,10 +145,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 						try {
 							if (mp.isPlaying() && gapLoopTime > 0) {
 								mp.seekTo(0);
-								Log.i(NativeAudioAssetComplex.class.getName(), "Gap Timer seekTo 0.");
 							} else if (!mp.isPlaying()) {
 								mp.start();
-								Log.i(NativeAudioAssetComplex.class.getName(), "Gap Timer was too late.");
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -146,28 +155,12 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				};
 				long waitingTime = (long) mp.getDuration() - (long) gapLoopTime;
 				GapTimer.schedule(GapTimerTask, waitingTime, waitingTime);
-				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with Gap Timer enabled.");
+				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with GapTimer enabled.");
 			} else if (gapLoopTime == -1) {
 				mp.setLooping(false);
-				GapTimer = new Timer();
-				GapTimerTask = new TimerTask() {
-					@Override
-					public void run() {
-						try {
-							if (mp.isPlaying() && mp.getCurrentPosition() >= mp.getDuration()) {
-								mp.seekTo(0);
-								Log.i(NativeAudioAssetComplex.class.getName(), "Stress Check seekTo 0.");
-							} else if (!mp.isPlaying()) {
-								mp.start();
-								Log.i(NativeAudioAssetComplex.class.getName(), "Stress Check was too late.");
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				};
-				GapTimer.schedule(GapTimerTask, 0, 10);
-				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with StressCheck enabled.");
+				nmp = prepareNextMediaplayer();
+				mp.setNextMediaPlayer(nmp);
+				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with GapLess enabled.");
 			} else {
 				mp.setLooping(true);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with default loop enabled.");
@@ -191,6 +184,15 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (gapLoopTime == -1) {
+			MediaPlayer tmp = mp;
+			mp = nmp;
+			mp.setVolume(volume, volume);
+			nmp = prepareNextMediaplayer();
+			mp.setNextMediaPlayer(nmp);
+			tmp.stop();
+			tmp.release();
+			Log.i(NativeAudioAssetComplex.class.getName(), "Continue with GapLess Next Mediaplayer.");
 		}
 	}
 }
