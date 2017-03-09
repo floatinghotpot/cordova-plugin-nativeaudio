@@ -46,7 +46,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		this.mp = prepareNextMediaplayer();
 	}
 
-	private prepareNextMediaplayer() {
+	private MediaPlayer prepareNextMediaplayer() {
 		MediaPlayer m = new MediaPlayer();
 		m.setOnCompletionListener(this);
 		m.setOnPreparedListener(this);
