@@ -46,7 +46,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		this.mp = prepareNextMediaplayer();
 	}
 
-	private MediaPlayer prepareNextMediaplayer() throws IOException  {
+	private MediaPlayer prepareNextMediaplayer() throws IOException {
 		MediaPlayer m = new MediaPlayer();
 		m.setOnCompletionListener(this);
 		m.setOnPreparedListener(this);
@@ -174,7 +174,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		}
 	}
 
-	public void onCompletion(MediaPlayer mPlayer) throws IOException {
+	public void onCompletion(MediaPlayer mPlayer) {
 		if (state != LOOPING) {
 			this.state = INVALID;
 			try {
@@ -185,14 +185,18 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				e.printStackTrace();
 			}
 		} else if (gapLoopTime == -1) {
-			MediaPlayer tmp = mp;
-			mp = nmp;
-			mp.setVolume(volume, volume);
-			nmp = prepareNextMediaplayer();
-			mp.setNextMediaPlayer(nmp);
-			tmp.stop();
-			tmp.release();
-			Log.i(NativeAudioAssetComplex.class.getName(), "Continue with GapLess Next Mediaplayer.");
+			try {
+				MediaPlayer tmp = mp;
+				mp = nmp;
+				mp.setVolume(volume, volume);
+				nmp = prepareNextMediaplayer();
+				mp.setNextMediaPlayer(nmp);
+				tmp.stop();
+				tmp.release();
+				Log.i(NativeAudioAssetComplex.class.getName(), "Continue with GapLess Next Mediaplayer.");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
