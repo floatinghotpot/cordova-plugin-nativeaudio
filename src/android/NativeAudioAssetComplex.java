@@ -18,7 +18,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
-public class NativeAudioAssetComplex implements onCompletionListener {
+public class NativeAudioAssetComplex implements OnCompletionListener {
 
 	private static final int INVALID = 0;
 	private static final int PREPARED = 1;
