@@ -157,10 +157,14 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 				GapTimer.schedule(GapTimerTask, waitingTime, waitingTime);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with GapTimer enabled.");
 			} else if (gapLoopTime == -1) {
-				mp.setLooping(false);
-				nmp = prepareNextMediaplayer();
-				mp.setNextMediaPlayer(nmp);
-				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with GapLess enabled.");
+				try {
+					mp.setLooping(false);
+					nmp = prepareNextMediaplayer();
+					mp.setNextMediaPlayer(nmp);
+					Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with GapLess enabled.");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			} else {
 				mp.setLooping(true);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with default loop enabled.");
