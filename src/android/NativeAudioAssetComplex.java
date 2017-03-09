@@ -174,7 +174,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		}
 	}
 
-	public void onCompletion(MediaPlayer mPlayer) {
+	public void onCompletion(MediaPlayer mPlayer) throws IOException {
 		if (state != LOOPING) {
 			this.state = INVALID;
 			try {
