@@ -49,7 +49,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private MediaPlayer prepareNextMediaplayer() throws IOException {
 		MediaPlayer m = new MediaPlayer();
 		m.setOnCompletionListener(this);
-		m.setOnPreparedListener(this);
+		// m.setOnPreparedListener(this);
 		m.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 		m.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		m.setVolume(volume, volume);
@@ -63,21 +63,20 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	}
 
 	private void invokePlay(Boolean loop) {
+		// check the best status for the player
 		Boolean playing = mp.isPlaying();
 		if (playing) {
 			mp.pause();
 			mp.setLooping(loop);
 			mp.seekTo(0);
 			mp.start();
-		}
-		if (!playing && state == PREPARED) {
-			state = (loop ? PENDING_LOOP : PENDING_PLAY);
-			onPrepared(mp);
 		} else if (!playing) {
 			state = (loop ? PENDING_LOOP : PENDING_PLAY);
 			mp.setLooping(loop);
 			mp.start();
 		}
+		// invoke a play based on the status
+		checkStatus();
 	}
 
 	public boolean pause() {
@@ -128,7 +127,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.release();
 	}
 
-	public void onPrepared(MediaPlayer mPlayer) {
+	public void checkStatus() {
 		if (state == PENDING_PLAY) {
 			mp.setLooping(false);
 			mp.seekTo(0);
@@ -172,10 +171,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.seekTo(0);
 			mp.start();
 			state = LOOPING;
-		} else {
-			state = PREPARED;
-			mp.seekTo(0);
-		}
+		} 
 	}
 
 	public void onCompletion(MediaPlayer mPlayer) {
