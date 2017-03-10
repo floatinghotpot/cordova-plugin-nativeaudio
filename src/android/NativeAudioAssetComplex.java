@@ -129,6 +129,8 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 	public void checkStatus() {
 		if (state == PENDING_PLAY) {
 			mp.setLooping(false);
+			if (gapLoopTime == -4)
+				m.setAudioStreamType(AudioManager.STREAM_ALARM);
 			mp.seekTo(0);
 			mp.start();
 			state = PLAYING;
@@ -164,13 +166,15 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 					e.printStackTrace();
 				}
 			} else {
+				if (gapLoopTime == -4)
+					m.setAudioStreamType(AudioManager.STREAM_ALARM);
 				mp.setLooping(true);
-				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with default loop enabled.");
+				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with standard loop enabled.");
 			}
 			mp.seekTo(0);
 			mp.start();
 			state = LOOPING;
-		} 
+		}
 	}
 
 	public void onCompletion(MediaPlayer mPlayer) {
@@ -192,7 +196,7 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 				this.nmp = tmp;
 				mPlayer.stop();
 				mPlayer.release();
-				Log.i(NativeAudioAssetComplex.class.getName(), "Continue with GapLess Next Mediaplayer.");
+				// Log.i(NativeAudioAssetComplex.class.getName(), "Continue with GapLess Next Mediaplayer.");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
