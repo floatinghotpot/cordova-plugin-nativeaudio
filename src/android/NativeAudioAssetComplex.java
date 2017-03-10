@@ -130,7 +130,7 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 		if (state == PENDING_PLAY) {
 			mp.setLooping(false);
 			if (gapLoopTime == -4)
-				m.setAudioStreamType(AudioManager.STREAM_ALARM);
+				mp.setAudioStreamType(AudioManager.STREAM_ALARM);
 			mp.seekTo(0);
 			mp.start();
 			state = PLAYING;
@@ -167,7 +167,7 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 				}
 			} else {
 				if (gapLoopTime == -4)
-					m.setAudioStreamType(AudioManager.STREAM_ALARM);
+					mp.setAudioStreamType(AudioManager.STREAM_ALARM);
 				mp.setLooping(true);
 				Log.i(NativeAudioAssetComplex.class.getName(), "Started MediaPlayer with standard loop enabled.");
 			}
