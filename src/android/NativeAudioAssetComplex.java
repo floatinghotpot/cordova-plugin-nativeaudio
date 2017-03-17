@@ -34,14 +34,16 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 	private TimerTask GapTimerTask;
 	private int gapLoopTime;
 	private float volume;
-	private AssetFileDescriptor afd;
+	// private AssetFileDescriptor afd;
+	private String fullPath;
 	Callable<Void> completeCallback;
 
-	public NativeAudioAssetComplex(AssetFileDescriptor afd, float volume, int preview) throws IOException {
+	public NativeAudioAssetComplex(String fullPath, float volume, int preview) throws IOException {
 		this.gapLoopTime = preview;
 		this.state = INVALID;
 		this.volume = volume;
-		this.afd = afd;
+		// this.afd = afd;
+		this.fullPath = fullPath;
 		this.mp = prepareNextMediaplayer();
 	}
 
@@ -49,7 +51,10 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 		MediaPlayer m = new MediaPlayer();
 		m.setOnCompletionListener(this);
 		// m.setOnPreparedListener(this);
+		AssetFileDescriptor afd = cordova.getActivity().getApplicationContext().getResources().getAssets().openFd(this.fullPath);
 		m.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+		afd.close();
+		//
 		if (gapLoopTime == -4)
 			m.setAudioStreamType(AudioManager.STREAM_ALARM);
 		else
