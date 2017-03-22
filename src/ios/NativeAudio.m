@@ -42,7 +42,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         NSLog (@"Error setting audio session category.");
         return;
     }
-
+    [session setCategory:AVAudioSessionCategoryAmbient error:nil];
     [session setActive: YES error: nil];
 }
 
