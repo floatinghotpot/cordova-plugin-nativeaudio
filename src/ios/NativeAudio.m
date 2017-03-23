@@ -207,7 +207,6 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             NSObject* asset = audioMapping[audioID];
             
 
-    [session setActive: YES error: nil];
 
             if (asset != nil){
                 if ([asset isKindOfClass:[NativeAudioAsset class]]) {
@@ -266,7 +265,6 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                     [_asset stop];
                 }
                 
-                [session setActive: NO error: nil];
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_STOP, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
