@@ -36,7 +36,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     
         [session setCategory:AVAudioSessionCategoryPlayback
                   withOptions:AVAudioSessionCategoryOptionDuckOthers
-                        error:nil]
+                        error:nil];
 
 }
 
@@ -246,7 +246,6 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     if ( audioMapping ) {
         NSObject* asset = audioMapping[audioID];
         
-        [session setActive: NO error: nil];
 
         if (asset != nil){
 
@@ -258,6 +257,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 } else {
                     [_asset stop];
                 }
+                
+                [session setActive: NO error: nil];
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_STOP, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
