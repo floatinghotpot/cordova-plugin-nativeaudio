@@ -44,7 +44,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         return;
     }
 
-    [session setActive: YES error: nil];
+    //[session setActive: YES error: nil];
 
 }
 
