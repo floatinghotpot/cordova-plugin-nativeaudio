@@ -293,7 +293,6 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
 	private void initSoundPool() {
-
 		if (assetMap == null) {
 			assetMap = new HashMap<String, NativeAudioAsset>();
 		}
@@ -305,32 +304,45 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	public void onAudioFocusChange(int focusChange) {
 		if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
-			// Pause playback
+			//pausePlayback();
 		} else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-			// Resume playback
+			//resumePlayback();
 		} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-			// Stop playback
+			//stopPlayback();
+		}
+	}
+
+	private void pausePlayback() {
+		for (NativeAudioAsset asset : assetMap.values()) {
+		     boolean wasPlaying = asset.pause();
+		     if (wasPlaying) {
+		         resumeList.add(asset);
+		     }
+		}
+	}
+
+	private void resumePlayback() {
+		for(NativeAudioAsset asset: resumeList) {
+			asset.resume();
+		}
+		resumeList.clear();
+	}
+
+	private void stopPlayback() {
+		for (NativeAudioAsset asset : assetMap.values()) {
+		     asset.stop();
 		}
 	}
 
 	@Override
 	public void onPause(boolean multitasking) {
 		super.onPause(multitasking);
-		// for (HashMap.Entry<String, NativeAudioAsset> entry : assetMap.entrySet()) {
-		//     NativeAudioAsset asset = entry.getValue();
-		//     boolean wasPlaying = asset.pause();
-		//     if (wasPlaying) {
-		//         resumeList.add(asset);
-		//     }
-		// }
+		pausePlayback();
 	}
 
 	@Override
 	public void onResume(boolean multitasking) {
 		super.onResume(multitasking);
-		// while (!resumeList.isEmpty()) {
-		//     NativeAudioAsset asset = resumeList.remove(0);
-		//     asset.resume();
-		// }
+		resumePlayback();
 	}
 }
