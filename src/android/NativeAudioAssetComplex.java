@@ -154,8 +154,6 @@ public class NativeAudioAssetComplex implements OnCompletionListener {
 						try {
 							if (mp.isPlaying() && gapLoopTime > 0) {
 								mp.seekTo(0);
-							} else if (!mp.isPlaying()) {
-								mp.start();
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
