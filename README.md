@@ -1,4 +1,4 @@
-#Cordova Native Audio Plugin
+# Cordova Native Audio Plugin
 
 Cordova / PhoneGap 3.5+ extension for Native Audio playback, aimed at HTML5 gaming and audio applications which require minimum latency, polyphony and concurrency.
 
@@ -49,7 +49,7 @@ Via Cordova CLI:
 cordova plugin add cordova-plugin-nativeaudio
 ```
 
-##Usage
+## Usage
 
 
 1. Wait for `deviceReady`.
@@ -57,9 +57,9 @@ cordova plugin add cordova-plugin-nativeaudio
 2. `play()` the audio asset via its id.
 3. `unload()` the audio asset via its id.
 
-##API
+## API
 
-###Preloading
+### Preloading
 
 ```javascript
 preloadSimple: function ( id, assetPath, successCallback, errorCallback)
@@ -86,7 +86,7 @@ Uses highlevel native APIs with a larger footprint. (iOS: AVAudioPlayer).
 Can be stopped / looped and used with multiple voices. Can be faded in and out using the delay parameter.
 
 
-####Volume & Voices
+#### Volume & Voices
 
 The default **volume** is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
 
@@ -95,7 +95,7 @@ If there are multiple voices (number greater than 0), it will cycle through voic
 
 Change the float-based **delay** parameter to increase the fade-in/fade-out timing.
 
-###Playback
+### Playback
 
 * params
  * id - string unique ID for the audio file
