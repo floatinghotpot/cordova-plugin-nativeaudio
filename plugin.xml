@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-nativeaudio"
-    version="3.0.9">
+    version="3.0.10">
       
     <name>Cordova Native Audio</name>
     <author>Andrew Trice, Raymond Xie, Sidney Bofah and other contributors</author>
@@ -37,7 +37,6 @@
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
         </config-file>
 
     </platform>
