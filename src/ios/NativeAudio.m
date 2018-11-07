@@ -29,7 +29,6 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 {
     self.fadeMusic = NO;
 
-    AudioSessionInitialize(NULL, NULL, nil , nil);
     AVAudioSession *session = [AVAudioSession sharedInstance];
     // we activate the audio session after the options to mix with others is set
     [session setActive: NO error: nil];
@@ -44,8 +43,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         return;
     }
 
-    [session setActive: YES error: nil];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [session setActive: YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error: nil];
+    [session setCategory:AVAudioSessionCategoryAmbient withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
+
 }
 
 - (void) parseOptions:(NSDictionary*) options
