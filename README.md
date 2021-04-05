@@ -90,7 +90,7 @@ Can be stopped / looped and used with multiple voices. Can be faded in and out u
 
 The default **volume** is 1.0, a lower default can be set by using a numerical value from 0.1 to 1.0.
 
-By default, there is 1 **vice**, that is: one instance that will be stopped & restarted on play().
+By default, there is 1 **voice**, that is: one instance that will be stopped & restarted on play().
 If there are multiple voices (number greater than 0), it will cycle through voices to play overlapping audio.
 
 Change the float-based **delay** parameter to increase the fade-in/fade-out timing.
